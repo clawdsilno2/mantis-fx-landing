@@ -78,6 +78,65 @@ footer span{color:var(--gold)}
 .fade-in.visible{opacity:1;transform:translateY(0)}
 
 /* RESPONSIVE */
+/* GLOBE POPUPS */
+.globe-popup{position:absolute;pointer-events:none;z-index:10;opacity:0;transition:opacity 0.8s ease}
+.globe-popup.show{opacity:1}
+.gp-line-svg{position:absolute;pointer-events:none;overflow:visible}
+.gp-line{stroke:rgba(212,175,55,0.6);stroke-width:2;fill:none;stroke-dasharray:500;stroke-dashoffset:500;transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)}
+.globe-popup.show .gp-line{stroke-dashoffset:0}
+.gp-dot{fill:var(--gold);opacity:0;transition:opacity 0.3s}
+.globe-popup.show .gp-dot{opacity:1}
+.gp-card{position:absolute;background:linear-gradient(135deg,rgba(18,18,16,0.97),rgba(14,14,12,0.97));border:1px solid rgba(212,175,55,0.2);border-radius:12px;padding:0.75rem 0.9rem;min-width:220px;backdrop-filter:blur(16px);transform:translateY(8px) scale(0.9);opacity:0;transition:transform 0.6s cubic-bezier(0.2,0.8,0.2,1) 0.5s,opacity 0.5s ease 0.5s;box-shadow:0 8px 32px rgba(0,0,0,0.5),0 0 20px rgba(212,175,55,0.05);overflow:hidden}
+.gp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,0.3),transparent)}
+.globe-popup.show .gp-card{transform:translateY(0) scale(1);opacity:1}
+.gp-head{display:flex;align-items:center;gap:0.55rem;margin-bottom:0.5rem;padding-bottom:0.45rem;border-bottom:1px solid rgba(255,255,255,0.04)}
+.gp-avatar{width:32px;height:32px;border-radius:50%;background:rgba(212,175,55,0.1);border:1.5px solid rgba(212,175,55,0.25);display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0}
+.gp-name{font-size:0.8rem;font-weight:700;color:var(--white);letter-spacing:0.2px}
+.gp-time{font-size:0.6rem;color:var(--gray);margin-top:1px}
+.gp-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.2rem}
+.gp-stat{text-align:center;padding:0.2rem 0}
+.gp-stat .v{font-size:0.75rem;font-weight:700;color:var(--white)}
+.gp-stat .l{font-size:0.48rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
+.gp-stat .profit{color:#22c55e;text-shadow:0 0 8px rgba(34,197,94,0.3)}
+
+/* ═══ MT5 FLOATING CARD ═══ */
+.mt5-card{background:var(--dark2);border:1px solid rgba(212,175,55,0.15);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,0.6);position:relative;overflow:hidden}
+.mt5-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,0.4),transparent)}
+.mt5-header{display:flex;justify-content:space-between;align-items:center}
+.mt5-pair{font-size:1.1rem;font-weight:800;letter-spacing:1px}
+.mt5-pair span{color:var(--gold)}
+.mt5-badge{font-size:0.6rem;padding:0.2rem 0.5rem;border-radius:4px;font-weight:700;letter-spacing:0.5px}
+.mt5-buy{background:rgba(34,197,94,0.15);color:#22c55e}
+.mt5-row{display:flex;justify-content:space-between;align-items:center;padding:0.25rem 0;font-size:0.78rem}
+.mt5-row .label{color:var(--gray)}
+.mt5-row .val{font-weight:600}
+.mt5-divider{height:1px;background:rgba(255,255,255,0.04);margin:0.4rem 0}
+
+/* ═══ HERO UPGRADED ═══ */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0}
+.hero-bg canvas{width:100%;height:100%;display:block}
+.hero .hero-badge,.hero h1,.hero p,.hero .cta-btn,.hero .hero-ticker,.hero .hero-particles{position:relative;z-index:2}
+.hero-badge{display:inline-block;padding:0.4rem 1.2rem;border:1px solid rgba(212,175,55,0.3);border-radius:50px;font-size:0.8rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:2rem;opacity:0;animation:heroFadeIn 0.6s ease 0.1s forwards}
+.hero h1{font-size:clamp(2.5rem,6vw,5rem);font-weight:800;line-height:1.1;margin-bottom:1.5rem;opacity:0;animation:heroSlideUp 0.8s ease 0.2s forwards}
+.hero h1 span{color:var(--gold)}
+.hero p{font-size:1.1rem;color:var(--gray);max-width:550px;margin-bottom:2.5rem;opacity:0;animation:heroSlideUp 0.8s ease 0.35s forwards}
+.hero .cta-btn{opacity:0;animation:heroSlideUp 0.8s ease 0.5s forwards}
+.hero-price{position:absolute;top:15%;right:8%;font-size:2.5rem;font-weight:800;color:rgba(212,175,55,0.06);font-variant-numeric:tabular-nums;animation:priceTick 3s ease-in-out infinite alternate;pointer-events:none}
+.hero-particles{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+.hero-particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:0;animation:particleFloat linear infinite}
+@keyframes heroFadeIn{to{opacity:1}}
+@keyframes heroSlideUp{to{opacity:1;transform:translateY(0)}from{transform:translateY(25px)}}
+@keyframes priceTick{0%{opacity:0.04;transform:translateY(0)}50%{opacity:0.08}100%{opacity:0.04;transform:translateY(-10px)}}
+@keyframes particleFloat{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:0.6}90%{opacity:0.3}100%{opacity:0;transform:translateY(-20vh) scale(1.5)}}
+
+/* ═══ LIVE TICKER ═══ */
+.hero-ticker{position:absolute;bottom:2rem;left:0;right:0;display:flex;justify-content:center;gap:2rem;z-index:1;opacity:0;animation:heroFadeIn 1s ease 1.2s forwards}
+.ticker-item{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;color:var(--gray)}
+.ticker-item .tv{font-weight:700;color:var(--white);font-variant-numeric:tabular-nums}
+.ticker-item .tg{color:#22c55e;font-weight:600}
+.ticker-item .tr{color:#ef4444;font-weight:600}
+
 @media(max-width:768px){
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .about-content{grid-template-columns:1fr}
@@ -98,12 +157,19 @@ footer span{color:var(--gold)}
   <a href="https://t.me/fxmantis" target="_blank">Join Channel</a>
 </nav>
 
-<!-- HERO -->
+<!-- ═══ HERO ═══ -->
 <section class="hero">
+  <!-- Animated chart background -->
+  <div class="hero-bg"><canvas id="hero-chart"></canvas></div>
+
+  <!-- Floating gold particles -->
+  <div class="hero-particles" id="hero-particles"></div>
+
   <div class="hero-badge">Gold Trading Signals</div>
   <h1>Patience wins.<br><span>Mantis strikes.</span></h1>
   <p>Precision gold signals powered by data, not emotion. 6 years of backtested performance. One trade at a time.</p>
   <a href="https://t.me/fxmantis" class="cta-btn" target="_blank">Join Mantis FX Free &rarr;</a>
+
 </section>
 
 <!-- STATS -->
@@ -127,6 +193,19 @@ footer span{color:var(--gold)}
     </div>
   </div>
 </div>
+
+<!-- GLOBAL MEMBERS -->
+<section id="globe-section" style="padding:5rem 2rem;text-align:center;position:relative;overflow:hidden;background:var(--dark)">
+  <div class="section-title fade-in" style="margin-bottom:0.3rem">Members across the <span>whole world</span></div>
+  <p class="section-sub fade-in" style="margin-bottom:2rem">Traders from 30+ countries trust Mantis FX for precision gold signals.</p>
+  <div id="globe-wrap" style="position:relative;width:min(700px,90vw);height:min(700px,90vw);margin:0 auto;overflow:visible">
+  <canvas id="globe-bg" width="1400" height="1400" style="position:absolute;top:0;left:0;width:100%;height:100%"></canvas>
+  <canvas id="globe-fg" width="1400" height="1400" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none"></canvas>
+</div>
+<script src="phenomenon.js"></script>
+<script src="cobe-bundle.js"></script>
+<script src="topojson.js"></script>
+</section>
 
 <!-- ABOUT -->
 <section id="about">
@@ -193,6 +272,333 @@ footer span{color:var(--gold)}
 </footer>
 
 <script>
+// ═══ HERO — CANDLESTICK CHART WITH SIGNAL POPUPS ═══
+(function(){
+  const canvas = document.getElementById('hero-chart');
+  const ctx = canvas.getContext('2d');
+  const heroEl = document.querySelector('.hero');
+
+  function resize() {
+    canvas.width = window.innerWidth * 2;
+    canvas.height = window.innerHeight * 2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let price = 2320;
+  const candles = [];
+  let active = null;
+  let activeStart = 0;
+  const CANDLE_DUR = 70; // faster candles ~1.2s each
+
+  // Signal system
+  let sigState = 'idle'; // idle, running, tp
+  let sigDir = 1;
+  let sigCandle = 0; // which candle of the signal sequence we're on
+  let sigEntry = 0;
+  let sigCountdown = Math.floor(Math.random() * 5) + 7;
+
+  // Signal sequence: [multiplier, direction_multiplier] per candle
+  // Small moves, retracement, then BIG expansion on candle 3-4
+  function getSigMoves(dir) {
+    return [
+      dir * (5 + Math.random() * 6),     // 1: entry
+      dir * (8 + Math.random() * 8),     // 2: push
+      dir * (-5 - Math.random() * 6),    // 3: retracement
+      dir * (-4 - Math.random() * 5),    // 4: more pullback
+      dir * (6 + Math.random() * 8),     // 5: recovery
+      dir * (12 + Math.random() * 12),   // 6: building
+      dir * (35 + Math.random() * 30),   // 7: BIG EXPANSION
+      dir * (25 + Math.random() * 20),   // 8: continuation
+      dir * (-5 - Math.random() * 6),    // 9: small retrace
+      dir * (12 + Math.random() * 15),   // 10: final push to TP
+    ];
+  }
+  let sigMoves = [];
+
+  // Fixed price range — chart stays in place
+  const RANGE_MID = 2320;
+  const RANGE_SIZE = 400; // total range: 2120 to 2520
+  const RANGE_LOW = RANGE_MID - RANGE_SIZE / 2;
+  const RANGE_HIGH = RANGE_MID + RANGE_SIZE / 2;
+
+  function planCandle(forceMove) {
+    let move = forceMove !== null ? forceMove : (Math.random() - 0.5) * 35;
+
+    // Mean-revert: if price drifts too far from center, pull it back
+    const drift = price - RANGE_MID;
+    if (forceMove === null) {
+      move -= drift * 0.1;
+    }
+
+    const open = price;
+    let close = price + move;
+
+    // Hard clamp so it never leaves the range
+    close = Math.max(RANGE_LOW + 15, Math.min(RANGE_HIGH - 15, close));
+
+    const wU = Math.random() * 2 + 0.3;
+    const wD = Math.random() * 2 + 0.3;
+    return { open, targetClose: close, high: Math.min(RANGE_HIGH, Math.max(open,close)+wU), low: Math.max(RANGE_LOW, Math.min(open,close)-wD), bullish: close >= open };
+  }
+
+  function startNewCandle() {
+    let forceMove = null;
+    let candleSignal = null;
+
+    sigCountdown--;
+    if (sigCountdown <= 0 && sigState === 'idle') {
+      // BUY when price is low (arrow below text), SELL when price is high (arrow above text)
+      sigDir = price < RANGE_MID ? 1 : -1;
+      sigState = 'running';
+      sigCandle = 0;
+      sigEntry = price;
+      sigMoves = getSigMoves(sigDir);
+      candleSignal = sigDir === 1 ? 'buy' : 'sell';
+      showSignalPopup(candleSignal);
+    }
+
+    if (sigState === 'running') {
+      if (sigCandle < sigMoves.length) {
+        forceMove = sigMoves[sigCandle];
+        sigCandle++;
+      }
+      if (sigCandle >= sigMoves.length) {
+        sigState = 'tp';
+      }
+    }
+
+    active = planCandle(forceMove);
+    active.signal = candleSignal;
+    activeStart = 0;
+  }
+
+  // Pre-fill
+  for (let i = 0; i < 35; i++) {
+    const p = planCandle(null);
+    candles.push({ open: p.open, close: p.targetClose, high: p.high, low: p.low, bullish: p.bullish });
+    price = p.targetClose;
+  }
+  startNewCandle();
+
+  // ── Big screen popups ──
+  let popupEl = null;
+  function clearPopup() {
+    if (popupEl) { popupEl.remove(); popupEl = null; }
+  }
+
+  function showSignalPopup(type) {
+    clearPopup();
+    const isBuy = type === 'buy';
+    const col = isBuy ? '#3b82f6' : '#ef4444';
+    // Position: BUY at bottom, SELL at top (away from hero text)
+    const vPos = isBuy ? 'bottom:8%' : 'top:5%';
+    const el = document.createElement('div');
+    el.style.cssText = `position:absolute;z-index:5;right:5%;${vPos};transform:translateX(20px);opacity:0;transition:all 0.4s cubic-bezier(0.2,0.8,0.2,1);pointer-events:none`;
+    el.innerHTML = `<div style="background:rgba(30,30,30,0.96);border-radius:14px;padding:0.55rem 0.7rem;display:flex;align-items:center;gap:0.6rem;backdrop-filter:blur(12px);box-shadow:0 8px 30px rgba(0,0,0,0.6);min-width:220px">
+      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#2AABEE,#229ED9);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.53 8.16l-1.8 8.49c-.14.6-.5.75-1.01.47l-2.8-2.06-1.35 1.3c-.15.15-.28.28-.57.28l.2-2.85 5.18-4.68c.22-.2-.05-.31-.35-.12L8.86 13.73l-2.75-.86c-.6-.19-.61-.6.12-.88l10.76-4.15c.5-.18.93.12.77.88z"/></svg>
+      </div>
+      <div>
+        <div style="font-size:0.6rem;color:#999;font-weight:500">Mantis FX VIP</div>
+        <div style="font-size:0.82rem;font-weight:700;color:${col}">${isBuy ? 'BUY' : 'SELL'} $XAUUSD HERE!</div>
+      </div>
+    </div>`;
+    heroEl.appendChild(el);
+    popupEl = el;
+    requestAnimationFrame(() => { el.style.opacity = '1'; el.style.transform = 'translateX(0)'; });
+    setTimeout(() => {
+      el.style.opacity = '0'; el.style.transform = 'translateX(20px)';
+      setTimeout(clearPopup, 500);
+    }, 4000);
+  }
+
+  // TP popup appears at the candle position — stored and drawn on canvas instead
+  let tpPopupData = null;
+  function showTPPopup(profit) {
+    tpPopupData = { profit, frame: 0 };
+  }
+
+  function draw() {
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    activeStart++;
+    const t = Math.min(activeStart / CANDLE_DUR, 1);
+    const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+    let currentClose;
+    if (active) {
+      currentClose = active.open + (active.targetClose - active.open) * eased;
+    }
+
+    // Candle complete
+    if (activeStart >= CANDLE_DUR && active) {
+      candles.push({ open: active.open, close: active.targetClose, high: active.high, low: active.low, bullish: active.bullish, signal: active.signal });
+      price = active.targetClose;
+      if (candles.length > 40) candles.shift();
+
+      if (sigState === 'tp') {
+        const profit = Math.abs(price - sigEntry).toFixed(0);
+        candles[candles.length-1].tp = true;
+        candles[candles.length-1].tpProfit = profit;
+        showTPPopup(profit);
+        sigState = 'idle';
+        sigCountdown = Math.floor(Math.random() * 5) + 7;
+      }
+      startNewCandle();
+    }
+
+    // Range: top near nav, bottom extends past CTA button
+    const padT = h * 0.02, padB = -h * 0.08, chartH = h - padT - padB;
+    function pY(p) { return padT + chartH - ((p - RANGE_LOW) / RANGE_SIZE) * chartH; }
+
+
+    const candleW = w / 38;
+    const totalW = candleW * 1.35;
+    const numVis = candles.length + 1;
+    const offX = w - numVis * totalW;
+
+    // Completed candles
+    for (let i = 0; i < candles.length; i++) {
+      const c = candles[i];
+      const x = offX + i * totalW;
+      const age = (candles.length - i) / candles.length;
+      const a = 0.04 + (1 - age) * 0.1;
+      const col = c.bullish ? `rgba(212,175,55,${a})` : `rgba(120,120,120,${a * 0.8})`;
+
+      const bodyTop = Math.min(pY(c.open), pY(c.close));
+      const bodyBot = Math.max(pY(c.open), pY(c.close));
+      const bodyH = Math.max(bodyBot - bodyTop, 2);
+
+      // Wick
+      ctx.strokeStyle = col; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(x+candleW/2, pY(c.high)); ctx.lineTo(x+candleW/2, pY(c.low)); ctx.stroke();
+      // Body
+      ctx.fillStyle = col; ctx.fillRect(x, bodyTop, candleW, bodyH);
+
+      const mid = x + candleW / 2;
+
+      // ── SIGNAL: big arrow on chart ──
+      if (c.signal) {
+        const isBuy = c.signal === 'buy';
+        const col2 = isBuy ? '#3b82f6' : '#ef4444';
+        const ay = isBuy ? bodyBot + 6 : bodyTop - 6;
+
+        // Big arrow
+        ctx.fillStyle = col2;
+        ctx.beginPath();
+        if (isBuy) { ctx.moveTo(mid, ay-30); ctx.lineTo(mid-16, ay); ctx.lineTo(mid+16, ay); }
+        else { ctx.moveTo(mid, ay+30); ctx.lineTo(mid-16, ay); ctx.lineTo(mid+16, ay); }
+        ctx.fill();
+
+        // Arrow glow
+        ctx.shadowColor = col2; ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Dashed entry line
+        ctx.setLineDash([4,4]); ctx.strokeStyle = col2+'22'; ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.moveTo(x, pY(c.open)); ctx.lineTo(w, pY(c.open)); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // ── TP HIT: profit label at candle ──
+      if (c.tp && c.tpProfit) {
+        const tpCx = mid;
+        const tpCy = c.bullish ? bTop - 18 : bBot + 18;
+
+        // Small rounded box
+        const txt = '+$' + c.tpProfit;
+        ctx.font = 'bold 13px -apple-system,sans-serif';
+        const tw = ctx.measureText(txt).width + 16;
+        const th = 22;
+        const tx = tpCx - tw / 2;
+        const ty = c.bullish ? tpCy - th - 2 : tpCy + 2;
+
+        ctx.fillStyle = 'rgba(34,197,94,0.15)';
+        ctx.beginPath(); ctx.roundRect(tx, ty, tw, th, 6); ctx.fill();
+        ctx.strokeStyle = 'rgba(34,197,94,0.4)'; ctx.lineWidth = 1; ctx.stroke();
+
+        ctx.fillStyle = '#22c55e';
+        ctx.textAlign = 'center';
+        ctx.fillText(txt, tpCx, ty + 15);
+        ctx.textAlign = 'left';
+
+        // Dashed TP line
+        ctx.setLineDash([4,3]); ctx.strokeStyle = 'rgba(34,197,94,0.15)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(offX, pY(c.close)); ctx.lineTo(x+candleW, pY(c.close)); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
+    // Active candle
+    if (active) {
+      const x = offX + candles.length * totalW;
+      const isBull = currentClose >= active.open;
+      const a = 0.16;
+      const col = isBull ? `rgba(212,175,55,${a})` : `rgba(120,120,120,${a})`;
+
+      const bodyTop = Math.min(pY(active.open), pY(currentClose));
+      const bodyBot = Math.max(pY(active.open), pY(currentClose));
+      const bodyH = Math.max(bodyBot - bodyTop, 2);
+
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(x + candleW/2, bodyTop - 2);
+      ctx.lineTo(x + candleW/2, bodyBot + 2);
+      ctx.stroke();
+
+      ctx.fillStyle = col;
+      ctx.fillRect(x, bodyTop, candleW, bodyH);
+
+      // Signal arrow on active candle
+      if (active.signal) {
+        const isBuy = active.signal === 'buy';
+        const col2 = isBuy ? '#3b82f6' : '#ef4444';
+        const mid2 = x + candleW / 2;
+        const ay = isBuy ? bodyBot + 6 : bodyTop - 6;
+
+        ctx.fillStyle = col2; ctx.beginPath();
+        if (isBuy) { ctx.moveTo(mid2,ay-30);ctx.lineTo(mid2-16,ay);ctx.lineTo(mid2+16,ay); }
+        else { ctx.moveTo(mid2,ay+30);ctx.lineTo(mid2-16,ay);ctx.lineTo(mid2+16,ay); }
+        ctx.shadowColor = col2; ctx.shadowBlur = 12;
+        ctx.fill(); ctx.shadowBlur = 0;
+      }
+
+      // Glow
+      const g = ctx.createRadialGradient(x+candleW/2, bodyTop+bodyH/2, 0, x+candleW/2, bodyTop+bodyH/2, candleW*3);
+      g.addColorStop(0, isBull ? 'rgba(212,175,55,0.04)' : 'rgba(120,120,120,0.02)');
+      g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g;
+      ctx.fillRect(x-candleW*2, bodyTop-candleW*3, candleW*6, bodyH+candleW*6);
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═══ FLOATING PARTICLES ═══
+(function(){
+  const container = document.getElementById('hero-particles');
+  function spawnParticle() {
+    const p = document.createElement('div');
+    p.className = 'hero-particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (6 + Math.random() * 8) + 's';
+    p.style.animationDelay = Math.random() * 2 + 's';
+    p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+    p.style.opacity = 0;
+    container.appendChild(p);
+    setTimeout(() => p.remove(), 16000);
+  }
+  setInterval(spawnParticle, 400);
+  for (let i = 0; i < 15; i++) setTimeout(spawnParticle, i * 200);
+})();
+
+
 // Intersection Observer for fade-in animations
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -203,6 +609,391 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ─── 3D GLOBE: cobe sphere + canvas country borders + city pings ───
+(function(){
+  const bgCanvas = document.getElementById('globe-bg');
+  const fgCanvas = document.getElementById('globe-fg');
+  const fgCtx = fgCanvas.getContext('2d');
+  const SIZE = 1400, R = SIZE * 0.42, CX = SIZE / 2, CY = SIZE / 2;
+
+  // phi ~0.15 = centers on Europe/Africa. theta ~0.3 = tilts down to show EU+Africa well
+  let currentPhi = 0.15;
+  const THETA = 0.3;
+
+  // ── COBE base globe (dark sphere only, no land texture) ──
+  createGlobe(bgCanvas, {
+    devicePixelRatio: 2,
+    width: SIZE, height: SIZE,
+    phi: currentPhi, theta: THETA,
+    dark: 1, diffuse: 0.8,
+    mapSamples: 16000, mapBrightness: 0, mapBaseBrightness: 0,
+    baseColor: [0.06, 0.06, 0.05],
+    markerColor: [0.83, 0.69, 0.22],
+    glowColor: [0.03, 0.025, 0.008],
+    markers: [], scale: 1, offset: [0, 0],
+    onRender: (state) => { state.phi = currentPhi; currentPhi += 0.001; },
+  });
+
+  // ── City-based member dots (real coordinates, ~2500 total) ──
+  // Country data: names, flags, currencies, and city coordinates with member counts
+  const countryData = {
+    NL:{flag:'🇳🇱',cur:'EUR',names:['Lucas V.','Thomas B.','Daan M.','Sem K.','Milan J.'],cities:[[52.37,4.90,95],[51.44,5.47,55],[51.92,4.48,70],[52.09,5.12,45],[52.38,6.90,25],[51.84,4.33,20],[53.22,6.57,25]]},
+    BE:{flag:'🇧🇪',cur:'EUR',names:['Jules V.','Wout D.','Mathis L.'],cities:[[50.85,4.35,50],[51.05,3.72,30],[51.22,4.40,25],[50.63,5.57,15]]},
+    GB:{flag:'🇬🇧',cur:'GBP',names:['James W.','Oliver S.','Harry T.','George P.','Charlie B.'],cities:[[51.51,-0.13,120],[53.48,-2.24,45],[52.49,-1.89,30],[51.45,-2.59,25],[53.80,-1.55,20],[54.97,-1.61,15],[52.63,-1.14,15]]},
+    SC:{flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',cur:'GBP',names:['Callum R.','Finlay M.','Angus S.'],cities:[[55.95,-3.19,40],[55.86,-4.25,30],[57.15,-2.09,10]]},
+    FR:{flag:'🇫🇷',cur:'EUR',names:['Pierre D.','Louis M.','Hugo R.','Théo B.'],cities:[[48.86,2.35,70],[43.30,5.37,25],[45.76,4.84,20],[43.61,1.44,15],[44.84,-0.58,10]]},
+    DE:{flag:'🇩🇪',cur:'EUR',names:['Felix K.','Leon S.','Max W.','Paul H.'],cities:[[52.52,13.41,55],[48.14,11.58,35],[50.94,6.96,25],[53.55,9.99,20],[48.78,9.18,15],[50.11,8.68,15]]},
+    CA:{flag:'🇨🇦',cur:'USD',names:['Liam C.','Noah R.','Ethan D.','Jack T.'],cities:[[43.65,-79.38,70],[45.50,-73.57,50],[49.28,-123.12,45],[51.05,-114.07,30],[53.55,-113.49,25],[44.65,-63.57,15],[49.90,-97.14,12]]},
+    US:{flag:'🇺🇸',cur:'USD',names:['Michael J.','David L.','Chris P.','Ryan M.','Brandon K.'],cities:[[40.71,-74.01,50],[34.05,-118.24,35],[41.88,-87.63,25],[29.76,-95.37,20],[33.75,-84.39,15],[25.76,-80.19,15],[47.61,-122.33,12],[39.74,-104.99,10]]},
+    AE:{flag:'🇦🇪',cur:'USD',names:['Ahmed K.','Omar H.','Rashid A.'],cities:[[25.20,55.27,55],[24.45,54.65,25],[25.34,55.39,10]]},
+    AU:{flag:'🇦🇺',cur:'USD',names:['Jack M.','Ethan W.','Liam P.','Noah B.'],cities:[[-33.87,151.21,55],[-37.81,144.96,40],[-27.47,153.03,25],[-31.95,115.86,20],[-34.93,138.60,15],[-12.46,130.84,8],[-16.92,145.77,8]]},
+    ES:{flag:'🇪🇸',cur:'EUR',names:['Carlos R.','Pablo G.','Diego M.'],cities:[[40.42,-3.70,25],[41.39,2.17,20],[37.39,-5.98,10]]},
+    SE:{flag:'🇸🇪',cur:'EUR',names:['Erik L.','Oscar N.'],cities:[[59.33,18.07,25],[57.71,11.97,12],[55.60,13.00,8]]},
+    NO:{flag:'🇳🇴',cur:'EUR',names:['Magnus O.','Henrik S.'],cities:[[59.91,10.75,22],[60.39,5.32,10],[63.43,10.40,8]]},
+    BG:{flag:'🇧🇬',cur:'EUR',names:['Dimitar P.','Ivan K.'],cities:[[42.70,23.32,20],[42.15,24.75,10],[43.20,27.92,5]]},
+    TR:{flag:'🇹🇷',cur:'USD',names:['Emre Y.','Ahmet D.','Mehmet C.'],cities:[[41.01,28.98,25],[39.93,32.86,15],[38.42,27.14,10]]},
+    ZA:{flag:'🇿🇦',cur:'USD',names:['Thabo M.','Sipho N.','Johan V.','Pieter D.'],cities:[[-33.92,18.42,40],[-26.20,28.04,50],[-29.86,31.03,25],[-33.96,25.60,15],[-25.75,28.19,15],[-29.12,26.21,10],[-23.90,29.45,8]]},
+    NG:{flag:'🇳🇬',cur:'USD',names:['Chinedu O.','Tunde A.','Emeka I.','Femi B.'],cities:[[6.52,3.38,50],[9.08,7.49,25],[7.38,3.94,15],[11.99,8.52,12],[4.95,8.32,10],[10.52,7.43,7]]},
+    CO:{flag:'🇨🇴',cur:'USD',names:['Andrés M.','Santiago L.'],cities:[[4.71,-74.07,25],[6.25,-75.56,15],[3.45,-76.53,12],[10.39,-75.51,8]]},
+    BR:{flag:'🇧🇷',cur:'USD',names:['Felipe L.','Lucas S.','Matheus R.'],cities:[[-23.55,-46.63,30],[-22.91,-43.17,20],[-15.79,-47.88,10],[-12.97,-38.51,8],[-30.03,-51.23,8]]},
+    MX:{flag:'🇲🇽',cur:'USD',names:['Diego F.','Carlos H.'],cities:[[19.43,-99.13,20],[20.67,-103.35,10],[25.67,-100.32,8]]},
+    AR:{flag:'🇦🇷',cur:'USD',names:['Mateo G.','Santiago R.'],cities:[[-34.60,-58.38,15],[-31.42,-64.18,5]]},
+    CL:{flag:'🇨🇱',cur:'USD',names:['Sebastián V.'],cities:[[-33.45,-70.65,10],[-36.82,-73.04,5]]},
+    PE:{flag:'🇵🇪',cur:'USD',names:['José L.'],cities:[[-12.05,-77.04,8]]},
+    KE:{flag:'🇰🇪',cur:'USD',names:['Kevin O.','Brian W.'],cities:[[-1.29,36.82,10],[4.05,39.66,5]]},
+    GH:{flag:'🇬🇭',cur:'USD',names:['Kwame A.','Kofi M.'],cities:[[5.56,-0.19,8],[6.69,-1.62,5]]},
+    TZ:{flag:'🇹🇿',cur:'USD',names:['Juma H.'],cities:[[-6.79,39.28,8]]},
+    IN:{flag:'🇮🇳',cur:'USD',names:['Rajesh K.','Amit S.','Vikram P.'],cities:[[19.08,72.88,25],[28.61,77.21,20],[12.97,77.59,15],[13.08,80.27,10],[22.57,88.36,10]]},
+    TH:{flag:'🇹🇭',cur:'USD',names:['Somchai T.','Nattapong S.'],cities:[[13.76,100.50,15],[18.79,98.98,5]]},
+    IT:{flag:'🇮🇹',cur:'EUR',names:['Marco R.','Luca B.'],cities:[[41.90,12.50,18],[45.46,9.19,12],[40.85,14.27,10]]},
+    PT:{flag:'🇵🇹',cur:'EUR',names:['André S.','Tiago M.'],cities:[[38.72,-9.14,18],[41.15,-8.61,12]]},
+    CH:{flag:'🇨🇭',cur:'EUR',names:['Jan N.','Marco F.'],cities:[[47.37,8.54,18],[46.20,6.14,10],[46.95,7.45,7]]},
+    CZ:{flag:'🇨🇿',cur:'EUR',names:['Tomáš H.','Jakub P.'],cities:[[50.08,14.44,15],[49.19,16.61,5]]},
+    FI:{flag:'🇫🇮',cur:'EUR',names:['Matti K.'],cities:[[60.17,24.94,10],[61.50,23.79,5]]},
+    GR:{flag:'🇬🇷',cur:'EUR',names:['Nikos P.','Giorgos K.'],cities:[[37.98,23.73,15],[40.64,22.94,10]]},
+    JP:{flag:'🇯🇵',cur:'USD',names:['Yuki T.','Kenji S.'],cities:[[35.68,139.69,12],[34.69,135.50,8]]},
+    SG:{flag:'🇸🇬',cur:'USD',names:['Wei L.','Jun H.'],cities:[[1.35,103.82,15]]},
+    HK:{flag:'🇭🇰',cur:'USD',names:['Kevin C.','Jason W.'],cities:[[22.32,114.17,20]]},
+    PL:{flag:'🇵🇱',cur:'EUR',names:['Krzysztof W.','Jakub M.'],cities:[[52.23,21.01,12],[50.06,19.94,8],[51.76,19.46,5]]},
+    HU:{flag:'🇭🇺',cur:'EUR',names:['Gábor T.'],cities:[[47.50,19.04,12]]},
+    RU:{flag:'🇷🇺',cur:'USD',names:['Dmitry V.'],cities:[[55.76,37.62,7],[59.93,30.32,3]]},
+  };
+
+  function ll3d(lat, lon) {
+    const p = (90 - lat) * Math.PI / 180, t = (lon + 180) * Math.PI / 180;
+    return { x: -Math.sin(p) * Math.cos(t), y: Math.cos(p), z: Math.sin(p) * Math.sin(t) };
+  }
+  function rotY(p, phi) {
+    // First rotate around Y axis (longitude/phi)
+    const c1 = Math.cos(phi), s1 = Math.sin(phi);
+    const x1 = p.x * c1 - p.z * s1;
+    const z1 = p.x * s1 + p.z * c1;
+    // Then tilt around X axis (latitude/theta) to match cobe
+    const c2 = Math.cos(THETA), s2 = Math.sin(THETA);
+    const y2 = p.y * c2 - z1 * s2;
+    const z2 = p.y * s2 + z1 * c2;
+    return { x: x1, y: y2, z: z2 };
+  }
+
+  // Generate ~2500 dots tagged with country
+  const dots = [];
+  for (const [code, data] of Object.entries(countryData)) {
+    for (const [lat, lon, count] of data.cities) {
+      for (let i = 0; i < count; i++) {
+        dots.push({
+          p: ll3d(lat + (Math.random() - 0.5) * 0.4, lon + (Math.random() - 0.5) * 0.4),
+          phase: Math.random() * Math.PI * 2,
+          spd: 1 + Math.random() * 2,
+          sz: 0.8 + Math.random() * 1.5,
+          country: code,
+        });
+      }
+    }
+  }
+
+  // ── Load country borders from TopoJSON ──
+  let arcs = [];
+
+  fetch('world-110m.json').then(r => r.json()).then(topo => {
+    const geo = topojson.feature(topo, topo.objects.countries);
+    for (const f of geo.features) {
+      const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
+      for (const poly of polys) {
+        for (const ring of poly) {
+          arcs.push(ring.map(([lon, lat]) => ll3d(lat, lon)));
+        }
+      }
+    }
+    loop();
+  });
+
+  // ── Render loop: country outlines + city dots on foreground canvas ──
+  function loop() {
+    const t = Date.now() / 1000;
+    fgCtx.clearRect(0, 0, SIZE, SIZE);
+
+    fgCtx.save();
+    fgCtx.beginPath();
+    fgCtx.arc(CX, CY, R, 0, Math.PI * 2);
+    fgCtx.clip();
+
+    // Country borders — bold outlines
+    fgCtx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
+    fgCtx.lineWidth = 1.2;
+    for (const arc of arcs) {
+      fgCtx.beginPath();
+      let pen = false;
+      for (const pt of arc) {
+        const r = rotY(pt, currentPhi);
+        if (r.z < -0.05) { pen = false; continue; }
+        const sx = CX + r.x * R, sy = CY - r.y * R;
+        pen ? fgCtx.lineTo(sx, sy) : fgCtx.moveTo(sx, sy);
+        pen = true;
+      }
+      fgCtx.stroke();
+    }
+
+    // Member dots
+    for (const d of dots) {
+      const r = rotY(d.p, currentPhi);
+      if (r.z < -0.02) continue;
+
+      const sx = CX + r.x * R, sy = CY - r.y * R;
+      const pulse = 0.5 + 0.5 * Math.sin(t * d.spd + d.phase);
+      const depth = 0.2 + (r.z + 1) * 0.4;
+      const a = pulse * depth;
+      const s = d.sz * (0.7 + pulse * 0.5);
+
+      // Glow halo
+      const g = fgCtx.createRadialGradient(sx, sy, 0, sx, sy, s * 4);
+      g.addColorStop(0, `rgba(212,175,55,${a * 0.3})`);
+      g.addColorStop(1, 'transparent');
+      fgCtx.fillStyle = g;
+      fgCtx.fillRect(sx - s * 4, sy - s * 4, s * 8, s * 8);
+
+      // Dot
+      fgCtx.beginPath();
+      fgCtx.arc(sx, sy, s, 0, Math.PI * 2);
+      fgCtx.fillStyle = `rgba(212,175,55,${a})`;
+      fgCtx.fill();
+
+      // Hot center
+      fgCtx.beginPath();
+      fgCtx.arc(sx, sy, s * 0.3, 0, Math.PI * 2);
+      fgCtx.fillStyle = `rgba(255,230,120,${a * 0.7})`;
+      fgCtx.fill();
+    }
+
+    fgCtx.restore();
+
+    // Move popups with globe — update dot origin each frame, card offset stays fixed
+    const wrap = document.getElementById('globe-wrap');
+    const sc = wrap.offsetWidth / SIZE;
+
+    for (const p of activePopups) {
+      if (!p.visible) continue;
+      const r2 = rotY(p.dot.p, currentPhi);
+      if (r2.z < 0.05) { p.el.style.opacity = '0'; continue; }
+      p.el.style.opacity = '';
+
+      const dotX = (CX + r2.x * R) * sc;
+      const dotY = (CY - r2.y * R) * sc;
+      p.el.style.left = dotX + 'px';
+      p.el.style.top = dotY + 'px';
+
+      // Update SVG line to match current offsets
+      const svg = p.el.querySelector('.gp-line-svg');
+      const ox = p.offX < 0 ? -p.offX + 5 : 5;
+      const oy = p.offY < 0 ? -p.offY + 5 : 5;
+      const svgW = Math.abs(p.offX) + 240, svgH = Math.abs(p.offY) + 60;
+      svg.setAttribute('viewBox', `0 0 ${svgW} ${svgH}`);
+      svg.style.width = svgW + 'px';
+      svg.style.height = svgH + 'px';
+      svg.style.left = (Math.min(0, p.offX) - 5) + 'px';
+      svg.style.top = (Math.min(0, p.offY) - 5) + 'px';
+      const ex = ox + p.offX, ey = oy + p.offY;
+      const mx = ox + p.offX * 0.6, my = oy + p.offY * 0.3 - 20;
+      p.el.querySelector('.gp-line').setAttribute('d', `M${ox},${oy} Q${mx},${my} ${ex},${ey}`);
+      p.el.querySelector('.gp-dot-c').setAttribute('cx', ox);
+      p.el.querySelector('.gp-dot-c').setAttribute('cy', oy);
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  // ── POPUP SYSTEM ──
+  const activePopups = [];
+  const popupContainer = document.getElementById('globe-wrap');
+
+  const balances = [200,250,300,350,400,500,650,750,1000,1250,1500,2000,2500,3000,3500,4000,5000,6000,7000];
+
+  const periods = [
+    {text:'3 days ago',minPct:0.08,maxPct:0.15},
+    {text:'1 week ago',minPct:0.15,maxPct:0.25},
+    {text:'2 weeks ago',minPct:0.30,maxPct:0.45},
+    {text:'3 weeks ago',minPct:0.40,maxPct:0.55},
+    {text:'1 month ago',minPct:0.50,maxPct:0.70},
+    {text:'6 weeks ago',minPct:0.65,maxPct:0.85},
+    {text:'2 months ago',minPct:1.00,maxPct:1.40},
+    {text:'3 months ago',minPct:1.50,maxPct:2.20},
+    {text:'4 months ago',minPct:2.00,maxPct:3.00},
+    {text:'6 months ago',minPct:3.00,maxPct:5.00},
+  ];
+
+  function fmtMoney(n, cur) {
+    const sym = cur === 'GBP' ? '£' : cur === 'EUR' ? '€' : '$';
+    return sym + n.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
+  }
+
+  let recentCountries = []; // Track last N countries shown
+
+  function pickDot() {
+    // Get visible dots, exclude recently shown countries
+    const visible = dots.filter(d => {
+      const r = rotY(d.p, currentPhi);
+      return r.z > 0.3 && !recentCountries.includes(d.country);
+    });
+    // Fallback: if all countries exhausted, just exclude last 2
+    if (!visible.length) {
+      const fallback = dots.filter(d => {
+        const r = rotY(d.p, currentPhi);
+        return r.z > 0.3 && !recentCountries.slice(-2).includes(d.country);
+      });
+      if (fallback.length) return fallback[Math.floor(Math.random() * fallback.length)];
+      // Last resort: any visible dot
+      const any = dots.filter(d => rotY(d.p, currentPhi).z > 0.2);
+      return any.length ? any[Math.floor(Math.random() * any.length)] : null;
+    }
+    return visible[Math.floor(Math.random() * visible.length)];
+  }
+
+  function getCardAbsY(popup) {
+    const sc = document.getElementById('globe-wrap').offsetWidth / SIZE;
+    const r = rotY(popup.dot.p, currentPhi);
+    return (CY - r.y * R) * sc + popup.offY;
+  }
+
+  function createPopup() {
+    const dot = pickDot();
+    if (!dot) return;
+
+    const cData = countryData[dot.country];
+    if (!cData) return;
+
+    // Track country to avoid repeats
+    recentCountries.push(dot.country);
+    if (recentCountries.length > 8) recentCountries.shift();
+
+    const name = cData.names[Math.floor(Math.random() * cData.names.length)];
+    const flag = cData.flag, cur = cData.cur;
+    const balance = balances[Math.floor(Math.random() * balances.length)];
+    const period = periods[Math.floor(Math.random() * periods.length)];
+    const profitPct = period.minPct + Math.random() * (period.maxPct - period.minPct);
+    const current = balance + Math.round(balance * profitPct);
+    const pct = Math.round(profitPct * 100);
+
+    const el = document.createElement('div');
+    el.className = 'globe-popup';
+    el.innerHTML = `
+      <svg class="gp-line-svg" style="position:absolute;overflow:visible">
+        <circle class="gp-dot gp-dot-c" r="4" fill="#D4AF37"/>
+        <path class="gp-line" d="M0,0 L100,0" stroke="rgba(212,175,55,0.6)"/>
+      </svg>
+      <div class="gp-card">
+        <div class="gp-head">
+          <div class="gp-avatar">${flag}</div>
+          <div><div class="gp-name">${name}</div><div class="gp-time">Joined ${period.text}</div></div>
+        </div>
+        <div class="gp-stats">
+          <div class="gp-stat"><div class="v">${fmtMoney(balance, cur)}</div><div class="l">Start</div></div>
+          <div class="gp-stat"><div class="v">${fmtMoney(current, cur)}</div><div class="l">Current</div></div>
+          <div class="gp-stat"><div class="v profit">+${pct}%</div><div class="l">Profit</div></div>
+        </div>
+      </div>`;
+
+    popupContainer.appendChild(el);
+
+    const wrap = document.getElementById('globe-wrap');
+    const sc = wrap.offsetWidth / SIZE;
+    const r3 = rotY(dot.p, currentPhi);
+    const dotX = (CX + r3.x * R) * sc;
+    const dotY = (CY - r3.y * R) * sc;
+    const wrapW = wrap.offsetWidth, wrapH = wrap.offsetHeight;
+
+    // Divide globe into 4 quadrants:
+    // top-left → line to bottom-right, top-right → line to bottom-left
+    // bottom-left → line to top-right, bottom-right → line to top-left
+    const isLeft = dotX < wrapW * 0.5;
+    const isTop = dotY < wrapH * 0.5;
+    const dirX = isLeft ? 1 : -1;  // left dot → right, right dot → left
+    const dirY = isTop ? 1 : -1;   // top dot → down, bottom dot → up
+
+    const lineLen = 180;
+    const offX = dirX * lineLen;
+    let offY = dirY * 80;
+
+    // Prevent overlap
+    let absY = dotY + offY;
+    const tryOffsets = [0, dirY * 110, dirY * -110, dirY * 220, dirY * -220];
+    for (const tryOff of tryOffsets) {
+      const testY = Math.max(15, Math.min(dotY + offY + tryOff, wrapH - 85));
+      let overlap = false;
+      for (const other of activePopups) {
+        if (Math.abs(testY - getCardAbsY(other)) < 100) { overlap = true; break; }
+      }
+      if (!overlap) { absY = testY; break; }
+    }
+    absY = Math.max(15, Math.min(absY, wrapH - 85));
+    offY = absY - dotY;
+
+    el.style.left = dotX + 'px';
+    el.style.top = dotY + 'px';
+
+    const card = el.querySelector('.gp-card');
+    card.style.left = offX + 'px';
+    card.style.top = offY + 'px';
+
+    // SVG line
+    const svg = el.querySelector('.gp-line-svg');
+    const svgW = Math.abs(offX) + 240, svgH = Math.abs(offY) + 60;
+    svg.setAttribute('viewBox', `0 0 ${svgW} ${svgH}`);
+    svg.style.width = svgW + 'px';
+    svg.style.height = svgH + 'px';
+    const ox = offX < 0 ? -offX + 5 : 5;
+    const oy = offY < 0 ? -offY + 5 : 5;
+    svg.style.left = (Math.min(0, offX) - 5) + 'px';
+    svg.style.top = (Math.min(0, offY) - 5) + 'px';
+    const ex = ox + offX, ey = oy + offY;
+    el.querySelector('.gp-line').setAttribute('d', `M${ox},${oy} Q${ox + offX * 0.6},${oy + offY * 0.3 - 20} ${ex},${ey}`);
+    el.querySelector('.gp-dot-c').setAttribute('cx', ox);
+    el.querySelector('.gp-dot-c').setAttribute('cy', oy);
+
+    const popup = { el, dot, visible: true, offX, offY };
+    activePopups.push(popup);
+
+    requestAnimationFrame(() => el.classList.add('show'));
+
+    // Remove after 4.5s, but trigger next one 0.5s before fade-out finishes
+    setTimeout(() => {
+      el.classList.remove('show');
+      setTimeout(() => {
+        el.remove();
+        const idx = activePopups.indexOf(popup);
+        if (idx >= 0) activePopups.splice(idx, 1);
+      }, 800);
+    }, 4500);
+  }
+
+  // One card at a time, continuous flow — next spawns as previous fades
+  function spawnNext() {
+    createPopup();
+    setTimeout(() => {
+      spawnNext();
+    }, 5000);
+  }
+  setTimeout(spawnNext, 800);
+})();
 </script>
 
 </body>

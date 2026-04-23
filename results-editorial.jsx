@@ -31,11 +31,25 @@ function EditorialLedger({ weeks, winRatio, cumulative, totalPips, totalTrades, 
   return (
     <div style={{
       width: '100%', height: '100%', background: EL.paper, color: EL.ink,
-      fontFamily: body, fontSize: 13, position: 'relative', overflow: 'hidden',
+      fontFamily: body, fontSize: 13, position: 'relative', overflow: 'auto',
       backgroundImage: 'radial-gradient(circle at 20% 0%, rgba(212,175,55,0.03), transparent 50%), radial-gradient(circle at 80% 100%, rgba(212,175,55,0.03), transparent 50%)',
     }}>
+      <style>{`
+        @media(max-width:768px){
+          .el-masthead{grid-template-columns:1fr !important;text-align:center !important;padding:16px 20px 12px !important}
+          .el-masthead>div:first-child,.el-masthead>div:last-child{display:none}
+          .el-weekstrip{padding:10px 16px !important;flex-wrap:wrap;justify-content:center}
+          .el-body{grid-template-columns:1fr !important;padding:16px 16px 24px !important;gap:24px !important;height:auto !important}
+          .el-body>div:last-child{border-left:none !important;padding-left:0 !important;border-top:1px solid rgba(212,175,55,0.1);padding-top:20px}
+        }
+        @media(max-width:480px){
+          .el-masthead .el-title{font-size:26px !important}
+          .el-hero-pips{font-size:64px !important}
+          .el-weeknum{font-size:48px !important}
+        }
+      `}</style>
       {/* Masthead */}
-      <div style={{ padding: '22px 48px 16px', borderBottom: `2px double ${EL.ruleStrong}`,
+      <div className="el-masthead" style={{ padding: '22px 48px 16px', borderBottom: `2px double ${EL.ruleStrong}`,
         display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'end' }}>
         <div style={{ fontSize: 10, letterSpacing: 3, textTransform: 'uppercase', color: EL.inkSoft }}>
           Week {w.week} report
@@ -44,7 +58,7 @@ function EditorialLedger({ weeks, winRatio, cumulative, totalPips, totalTrades, 
           <div style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', color: EL.goldDeep, marginBottom: 4 }}>
             Mantis FX · VIP
           </div>
-          <div style={{ fontFamily: display, fontSize: 40, fontWeight: 500, fontStyle: 'italic', letterSpacing: -0.5, lineHeight: 1 }}>
+          <div className="el-title" style={{ fontFamily: display, fontSize: 40, fontWeight: 500, fontStyle: 'italic', letterSpacing: -0.5, lineHeight: 1 }}>
             Weekly trading report
           </div>
         </div>
@@ -54,7 +68,7 @@ function EditorialLedger({ weeks, winRatio, cumulative, totalPips, totalTrades, 
       </div>
 
       {/* Week selector strip */}
-      <div style={{ padding: '12px 48px', borderBottom: `1px solid ${EL.rule}`,
+      <div className="el-weekstrip" style={{ padding: '12px 48px', borderBottom: `1px solid ${EL.rule}`,
         display: 'flex', alignItems: 'center', gap: 16, background: 'rgba(212,175,55,0.03)' }}>
         <span style={{ fontSize: 10, letterSpacing: 2.5, textTransform: 'uppercase', color: EL.inkSoft }}>
           Select week
@@ -97,12 +111,12 @@ function EditorialLedger({ weeks, winRatio, cumulative, totalPips, totalTrades, 
       </div>
 
       {/* Body — 2 column */}
-      <div style={{ padding: '24px 48px 28px', display: 'grid', gridTemplateColumns: '1.35fr 1fr', gap: 44, height: 'calc(100% - 148px)', overflow: 'hidden' }}>
+      <div className="el-body" style={{ padding: '24px 48px 28px', display: 'grid', gridTemplateColumns: '1.35fr 1fr', gap: 44, overflow: 'auto' }}>
 
         {/* LEFT — lead */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18, minHeight: 0, overflow: 'hidden' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 18, borderBottom: `1px solid ${EL.rule}`, paddingBottom: 12 }}>
-            <div style={{ fontFamily: display, fontSize: 78, fontWeight: 400, fontStyle: 'italic', lineHeight: 0.85 }}>
+            <div className="el-weeknum" style={{ fontFamily: display, fontSize: 78, fontWeight: 400, fontStyle: 'italic', lineHeight: 0.85 }}>
               Week {String(w.week).padStart(2, '0')}
             </div>
             <div style={{ flex: 1 }}>
@@ -121,7 +135,7 @@ function EditorialLedger({ weeks, winRatio, cumulative, totalPips, totalTrades, 
               <div style={{ fontSize: 10, letterSpacing: 3, textTransform: 'uppercase', color: EL.inkSoft, marginBottom: 4 }}>
                 Pips captured
               </div>
-              <div style={{ fontFamily: display, fontSize: 112, fontWeight: 400, fontStyle: 'italic', lineHeight: 0.82,
+              <div className="el-hero-pips" style={{ fontFamily: display, fontSize: 112, fontWeight: 400, fontStyle: 'italic', lineHeight: 0.82,
                 letterSpacing: -3, fontVariantNumeric: 'oldstyle-nums' }}>
                 +{w.pips}
               </div>

@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mantis FX - Gold Trading Signals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--gold:#D4AF37;--gold-light:#E8C84A;--dark:#0A0A0A;--dark2:#111111;--dark3:#1A1A1A;--gray:#888;--white:#F5F5F5}
@@ -36,7 +39,7 @@ nav a:hover{background:var(--gold);color:var(--dark)}
 /* SECTIONS */
 section{padding:5rem 2rem}
 .container{max-width:1000px;margin:0 auto}
-.section-title{font-size:2rem;font-weight:800;margin-bottom:0.5rem}
+.section-title{font-size:2.5rem;font-weight:400;margin-bottom:0.5rem;font-family:'Instrument Serif',Georgia,serif;letter-spacing:-0.02em;line-height:1.1}
 .section-title span{color:var(--gold)}
 .section-sub{color:var(--gray);margin-bottom:3rem;font-size:1rem}
 
@@ -99,43 +102,16 @@ footer span{color:var(--gold)}
 .gp-stat .l{font-size:0.48rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
 .gp-stat .profit{color:#22c55e;text-shadow:0 0 8px rgba(34,197,94,0.3)}
 
-/* ═══ MT5 FLOATING CARD ═══ */
-.mt5-card{background:var(--dark2);border:1px solid rgba(212,175,55,0.15);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,0.6);position:relative;overflow:hidden}
-.mt5-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,0.4),transparent)}
-.mt5-header{display:flex;justify-content:space-between;align-items:center}
-.mt5-pair{font-size:1.1rem;font-weight:800;letter-spacing:1px}
-.mt5-pair span{color:var(--gold)}
-.mt5-badge{font-size:0.6rem;padding:0.2rem 0.5rem;border-radius:4px;font-weight:700;letter-spacing:0.5px}
-.mt5-buy{background:rgba(34,197,94,0.15);color:#22c55e}
-.mt5-row{display:flex;justify-content:space-between;align-items:center;padding:0.25rem 0;font-size:0.78rem}
-.mt5-row .label{color:var(--gray)}
-.mt5-row .val{font-weight:600}
-.mt5-divider{height:1px;background:rgba(255,255,255,0.04);margin:0.4rem 0}
-
-/* ═══ HERO UPGRADED ═══ */
+/* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
-.hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0}
-.hero-bg canvas{width:100%;height:100%;display:block}
-.hero .hero-badge,.hero h1,.hero p,.hero .cta-btn,.hero .hero-ticker,.hero .hero-particles{position:relative;z-index:2}
-.hero-badge{display:inline-block;padding:0.4rem 1.2rem;border:1px solid rgba(212,175,55,0.3);border-radius:50px;font-size:0.8rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:2rem;opacity:0;animation:heroFadeIn 0.6s ease 0.1s forwards}
-.hero h1{font-size:clamp(2.5rem,6vw,5rem);font-weight:800;line-height:1.1;margin-bottom:1.5rem;opacity:0;animation:heroSlideUp 0.8s ease 0.2s forwards}
-.hero h1 span{color:var(--gold)}
-.hero p{font-size:1.1rem;color:var(--gray);max-width:550px;margin-bottom:2.5rem;opacity:0;animation:heroSlideUp 0.8s ease 0.35s forwards}
-.hero .cta-btn{opacity:0;animation:heroSlideUp 0.8s ease 0.5s forwards}
-.hero-price{position:absolute;top:15%;right:8%;font-size:2.5rem;font-weight:800;color:rgba(212,175,55,0.06);font-variant-numeric:tabular-nums;animation:priceTick 3s ease-in-out infinite alternate;pointer-events:none}
-.hero-particles{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
-.hero-particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:0;animation:particleFloat linear infinite}
-@keyframes heroFadeIn{to{opacity:1}}
-@keyframes heroSlideUp{to{opacity:1;transform:translateY(0)}from{transform:translateY(25px)}}
-@keyframes priceTick{0%{opacity:0.04;transform:translateY(0)}50%{opacity:0.08}100%{opacity:0.04;transform:translateY(-10px)}}
-@keyframes particleFloat{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:0.6}90%{opacity:0.3}100%{opacity:0;transform:translateY(-20vh) scale(1.5)}}
+.hero-shader{position:absolute;top:0;left:0;width:100vw;height:100vh;z-index:0;display:block}
+.hero>*:not(.hero-shader){position:relative;z-index:2}
+.hero-badge{display:inline-block;padding:0.4rem 1.2rem;border:1px solid rgba(244,200,96,0.3);border-radius:50px;font-size:0.8rem;color:rgba(255,225,160,0.9);letter-spacing:2px;text-transform:uppercase;margin-bottom:2rem;animation:fadeInDown 0.8s ease;mix-blend-mode:screen}
+.hero h1{font-size:clamp(2.5rem,7vw,5.5rem);font-weight:400;line-height:1;margin-bottom:0.8rem;animation:fadeInUp 0.8s ease;font-family:'Instrument Serif',Georgia,serif;color:rgba(255,225,160,0.92);mix-blend-mode:screen;letter-spacing:-0.02em}
+.hero h1 span{color:rgba(255,225,160,0.92)}
+.hero .hero-sub{font-size:clamp(1rem,2.5vw,1.3rem);color:rgba(255,225,160,0.5);max-width:550px;margin-bottom:2.5rem;animation:fadeInUp 1s ease;font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;mix-blend-mode:screen}
+.hero p{font-size:1.1rem;color:var(--gray);max-width:550px;margin-bottom:2.5rem;animation:fadeInUp 1s ease}
 
-/* ═══ LIVE TICKER ═══ */
-.hero-ticker{position:absolute;bottom:2rem;left:0;right:0;display:flex;justify-content:center;gap:2rem;z-index:1;opacity:0;animation:heroFadeIn 1s ease 1.2s forwards}
-.ticker-item{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;color:var(--gray)}
-.ticker-item .tv{font-weight:700;color:var(--white);font-variant-numeric:tabular-nums}
-.ticker-item .tg{color:#22c55e;font-weight:600}
-.ticker-item .tr{color:#ef4444;font-weight:600}
 
 @media(max-width:768px){
   .stats-grid{grid-template-columns:repeat(2,1fr)}
@@ -154,45 +130,72 @@ footer span{color:var(--gold)}
 
 <nav>
   <div class="logo">MANTIS <span>FX</span></div>
-  <a href="https://t.me/fxmantis" target="_blank">Join Channel</a>
+  <a href="https://t.me/fxmantis" target="_blank">UNLOCK ACCESS</a>
 </nav>
 
-<!-- ═══ HERO ═══ -->
-<section class="hero">
-  <!-- Animated chart background -->
-  <div class="hero-bg"><canvas id="hero-chart"></canvas></div>
-
-  <!-- Floating gold particles -->
-  <div class="hero-particles" id="hero-particles"></div>
-
+<!-- HERO -->
+<section class="hero" id="hero">
+  <canvas class="hero-shader" id="hero-shader"></canvas>
   <div class="hero-badge">Gold Trading Signals</div>
-  <h1>Patience wins.<br><span>Mantis strikes.</span></h1>
-  <p>Precision gold signals powered by data, not emotion. 6 years of backtested performance. One trade at a time.</p>
-  <a href="https://t.me/fxmantis" class="cta-btn" target="_blank">Join Mantis FX Free &rarr;</a>
-
+  <h1>In an industry full of noise,<br>you found <span>Mantis</span>.</h1>
+  <div class="hero-sub">Precision gold signals. Data-driven. No emotion. Just results.</div>
+  <a href="https://t.me/fxmantis" class="cta-btn" target="_blank" style="position:relative;z-index:3;pointer-events:all">GET FREE ACCESS &rarr;</a>
 </section>
 
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stats-grid">
-    <div class="fade-in">
-      <div class="stat-num">6</div>
-      <div class="stat-label">Years Backtested</div>
+<!-- WHAT YOU GET -->
+<section style="padding:5rem 2rem;background:var(--dark);border-top:1px solid rgba(212,175,55,0.08)">
+  <div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center">
+    <div class="fade-in" style="padding:2rem 1rem;background:var(--dark2);border:1px solid rgba(212,175,55,0.08);border-radius:12px;transition:border-color 0.3s">
+      <div style="font-size:2.5rem;margin-bottom:0.8rem">📡</div>
+      <div style="font-size:1.1rem;font-weight:800;color:var(--gold);margin-bottom:0.4rem;letter-spacing:0.5px">FREE DAILY SIGNALS</div>
+      <div style="font-size:0.8rem;color:var(--gray);line-height:1.5">Precision XAUUSD entries delivered to Telegram every London & NY session.</div>
     </div>
-    <div class="fade-in">
-      <div class="stat-num">51.2%</div>
-      <div class="stat-label">Win Rate (1:1 RR)</div>
+    <div class="fade-in" style="padding:2rem 1rem;background:var(--dark2);border:1px solid rgba(212,175,55,0.08);border-radius:12px;transition:border-color 0.3s">
+      <div style="font-size:2.5rem;margin-bottom:0.8rem">🎯</div>
+      <div style="font-size:1.1rem;font-weight:800;color:var(--gold);margin-bottom:0.4rem;letter-spacing:0.5px">78% WIN RATE</div>
+      <div style="font-size:0.8rem;color:var(--gray);line-height:1.5">Verified track record across months of live trading. Data doesn't lie.</div>
     </div>
-    <div class="fade-in">
-      <div class="stat-num">425K</div>
-      <div class="stat-label">Candles Analyzed</div>
+    <div class="fade-in" style="padding:2rem 1rem;background:var(--dark2);border:1px solid rgba(212,175,55,0.08);border-radius:12px;transition:border-color 0.3s">
+      <div style="font-size:2.5rem;margin-bottom:0.8rem">🤝</div>
+      <div style="font-size:1.1rem;font-weight:800;color:var(--gold);margin-bottom:0.4rem;letter-spacing:0.5px">1-ON-1 GUIDANCE</div>
+      <div style="font-size:0.8rem;color:var(--gray);line-height:1.5">Personal mentoring from Manuel. Not a bot — real answers, real support.</div>
     </div>
-    <div class="fade-in">
-      <div class="stat-num">~1/day</div>
-      <div class="stat-label">Avg Signals</div>
+    <div class="fade-in" style="padding:2rem 1rem;background:var(--dark2);border:1px solid rgba(212,175,55,0.08);border-radius:12px;transition:border-color 0.3s">
+      <div style="font-size:2.5rem;margin-bottom:0.8rem">📚</div>
+      <div style="font-size:1.1rem;font-weight:800;color:var(--gold);margin-bottom:0.4rem;letter-spacing:0.5px">FULL TRADING COURSE</div>
+      <div style="font-size:0.8rem;color:var(--gray);line-height:1.5">Learn the exact strategy behind every signal. Range trading, gold, from zero to pro.</div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-content">
+      <div class="about-img fade-in">
+        <img src="manuel.png" alt="Manuel Tamalis" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1">
+      </div>
+      <div class="about-text fade-in">
+        <div class="section-title">Meet <span>Mantis</span></div>
+        <h3>Manuel <span>Tamalis</span></h3>
+        <p>29 years old, Zurich-based trader &amp; developer with a simple philosophy: wait for the perfect setup, then strike. Not based on emotion, but purely based on data and calculations.</p>
+        <p>Every signal is backed by a system that's been proven to work through crashes, rallies, and everything in between.</p>
+        <p style="border-left:2px solid var(--gold);padding-left:1rem;font-style:italic;color:var(--gray);margin:1.2rem 0">"I created an algorithm 6 years ago, far before AI even became popular. This system is built on specific parameters and tells me exactly when to buy or sell. Now, I'm making this system public to anyone that wants to see some real progress in the financial markets."</p>
+        <div>
+          <span class="about-tag">12 Years Trading Experience</span>
+          <span class="about-tag">XAUUSD Specialist</span>
+          <span class="about-tag">Data-Driven System</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WEEKLY RESULTS -->
+<section id="results" style="padding:4rem 0;background:var(--dark2);border-top:1px solid rgba(212,175,55,0.1);border-bottom:1px solid rgba(212,175,55,0.1)">
+  <div id="results-root" class="fade-in" style="max-width:1200px;margin:0 auto;height:780px;border-radius:12px;overflow:hidden;border:1px solid rgba(212,175,55,0.1)"></div>
+</section>
 
 <!-- GLOBAL MEMBERS -->
 <section id="globe-section" style="padding:5rem 2rem;text-align:center;position:relative;overflow:hidden;background:var(--dark)">
@@ -207,29 +210,6 @@ footer span{color:var(--gold)}
 <script src="topojson.js"></script>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="about-content">
-      <div class="about-img fade-in">
-        <!-- Replace with Manuel's image -->
-        <span style="z-index:1">[ Manuel's Photo ]</span>
-      </div>
-      <div class="about-text fade-in">
-        <div class="section-title">Meet <span>Mantis</span></div>
-        <h3>Manuel <span>Tamalis</span></h3>
-        <p>Dubai-based gold trader with a simple philosophy: wait for the perfect setup, then strike. No noise, no overtrading, no guessing. Just clean, calculated entries at key zones.</p>
-        <p>Every signal is backed by a system that's been tested across 6 years of market data, through crashes, rallies, and everything in between.</p>
-        <div>
-          <span class="about-tag">XAUUSD Specialist</span>
-          <span class="about-tag">Range Trading</span>
-          <span class="about-tag">London &amp; NY Sessions</span>
-          <span class="about-tag">Data-Driven</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- HOW IT WORKS -->
 <section id="how" style="background:var(--dark2)">
@@ -272,332 +252,143 @@ footer span{color:var(--gold)}
 </footer>
 
 <script>
-// ═══ HERO — CANDLESTICK CHART WITH SIGNAL POPUPS ═══
+// ═══ HERO: Gold & Black WebGL Shader ═══
 (function(){
-  const canvas = document.getElementById('hero-chart');
-  const ctx = canvas.getContext('2d');
-  const heroEl = document.querySelector('.hero');
+const canvas = document.getElementById('hero-shader');
+const gl = canvas.getContext('webgl2', { antialias: false });
+if (!gl) return;
 
-  function resize() {
-    canvas.width = window.innerWidth * 2;
-    canvas.height = window.innerHeight * 2;
-  }
-  resize();
-  window.addEventListener('resize', resize);
+const VS = `#version 300 es
+in vec2 aPos;
+void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }`;
 
-  let price = 2320;
-  const candles = [];
-  let active = null;
-  let activeStart = 0;
-  const CANDLE_DUR = 70; // faster candles ~1.2s each
+const FS = `#version 300 es
+precision highp float;
+uniform vec2 uResolution;
+uniform float uTime;
+uniform vec2 uMouse;
+uniform vec3 uClick;
+uniform float uHover;
+out vec4 fragColor;
 
-  // Signal system
-  let sigState = 'idle'; // idle, running, tp
-  let sigDir = 1;
-  let sigCandle = 0; // which candle of the signal sequence we're on
-  let sigEntry = 0;
-  let sigCountdown = Math.floor(Math.random() * 5) + 7;
+const vec3 PAL_A   = vec3(0.020, 0.016, 0.012);
+const vec3 PAL_B   = vec3(0.165, 0.114, 0.031);
+const vec3 PAL_C   = vec3(0.957, 0.784, 0.376);
+const vec3 PAL_GLOW= vec3(1.000, 0.851, 0.478);
 
-  // Signal sequence: [multiplier, direction_multiplier] per candle
-  // Small moves, retracement, then BIG expansion on candle 3-4
-  function getSigMoves(dir) {
-    return [
-      dir * (5 + Math.random() * 6),     // 1: entry
-      dir * (8 + Math.random() * 8),     // 2: push
-      dir * (-5 - Math.random() * 6),    // 3: retracement
-      dir * (-4 - Math.random() * 5),    // 4: more pullback
-      dir * (6 + Math.random() * 8),     // 5: recovery
-      dir * (12 + Math.random() * 12),   // 6: building
-      dir * (35 + Math.random() * 30),   // 7: BIG EXPANSION
-      dir * (25 + Math.random() * 20),   // 8: continuation
-      dir * (-5 - Math.random() * 6),    // 9: small retrace
-      dir * (12 + Math.random() * 15),   // 10: final push to TP
-    ];
-  }
-  let sigMoves = [];
+float hash(vec2 p){ p = fract(p*vec2(123.34, 456.21)); p += dot(p, p+45.32); return fract(p.x*p.y); }
+float noise(vec2 p){
+  vec2 i = floor(p), f = fract(p);
+  float a = hash(i), b = hash(i+vec2(1,0)), c = hash(i+vec2(0,1)), d = hash(i+vec2(1,1));
+  vec2 u = f*f*(3.0-2.0*f);
+  return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);
+}
+float fbm(vec2 p){
+  float s = 0.0, a = 0.5;
+  for(int i=0;i<5;i++){ s += a*noise(p); p*=2.02; a*=0.5; }
+  return s;
+}
+vec2 curl(vec2 p, float t){
+  float e = 0.08;
+  float n1 = fbm(p + vec2(0.0, t*0.12));
+  float n2 = fbm(p + vec2(t*0.12, 0.0));
+  float a = fbm(p + vec2(e,0.0)) - fbm(p - vec2(e,0.0));
+  float b = fbm(p + vec2(0.0,e)) - fbm(p - vec2(0.0,e));
+  return vec2(b, -a) + 0.15*vec2(n1, n2);
+}
+void main(){
+  vec2 uv = gl_FragCoord.xy / uResolution;
+  float aspR = uResolution.x / uResolution.y;
+  vec2 p = vec2((uv.x-0.5)*2.0*aspR, (uv.y-0.5)*2.0);
+  vec2 mp = vec2((uMouse.x-0.5)*2.0*aspR, (uMouse.y-0.5)*2.0);
+  float t = uTime*0.25;
 
-  // Fixed price range — chart stays in place
-  const RANGE_MID = 2320;
-  const RANGE_SIZE = 400; // total range: 2120 to 2520
-  const RANGE_LOW = RANGE_MID - RANGE_SIZE / 2;
-  const RANGE_HIGH = RANGE_MID + RANGE_SIZE / 2;
+  vec2 toM = mp - p;
+  float d = length(toM);
+  vec2 pull = toM / (d*d + 0.3) * 0.4 * (0.5 + uHover*0.5);
 
-  function planCandle(forceMove) {
-    let move = forceMove !== null ? forceMove : (Math.random() - 0.5) * 35;
+  float clickAge = uClick.z;
+  vec2 cp = vec2((uClick.x-0.5)*2.0*aspR, (uClick.y-0.5)*2.0);
+  float r = length(p - cp);
+  float ripple = exp(-clickAge*1.4) * sin(r*12.0 - clickAge*10.0) * exp(-r*1.2);
 
-    // Mean-revert: if price drifts too far from center, pull it back
-    const drift = price - RANGE_MID;
-    if (forceMove === null) {
-      move -= drift * 0.1;
-    }
+  vec2 q = p*0.9 + pull + curl(p*1.2 + vec2(t, -t*0.7), t)*1.1;
+  float v = fbm(q + ripple*0.4);
+  v = smoothstep(0.25, 0.85, v);
 
-    const open = price;
-    let close = price + move;
+  float lines = sin((q.x*4.0 + q.y*3.0 + fbm(q*2.0)*6.0)*3.14159);
+  lines = pow(max(lines, 0.0), 8.0);
 
-    // Hard clamp so it never leaves the range
-    close = Math.max(RANGE_LOW + 15, Math.min(RANGE_HIGH - 15, close));
+  vec3 col = mix(PAL_A, PAL_B, v);
+  col = mix(col, PAL_C, lines*v*0.85);
+  col += PAL_GLOW * exp(-d*2.2) * 0.25 * uHover;
+  col += vec3(0.9, 0.95, 1.0) * max(ripple, 0.0) * exp(-clickAge*2.2) * 0.6;
+  col *= 1.0 - 0.35*dot(uv-0.5, uv-0.5);
 
-    const wU = Math.random() * 2 + 0.3;
-    const wD = Math.random() * 2 + 0.3;
-    return { open, targetClose: close, high: Math.min(RANGE_HIGH, Math.max(open,close)+wU), low: Math.max(RANGE_LOW, Math.min(open,close)-wD), bullish: close >= open };
-  }
+  fragColor = vec4(col, 1.0);
+}`;
 
-  function startNewCandle() {
-    let forceMove = null;
-    let candleSignal = null;
+function compile(type, src){
+  const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+  if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
+  return s;
+}
+const prog = gl.createProgram();
+gl.attachShader(prog, compile(gl.VERTEX_SHADER, VS));
+gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FS));
+gl.linkProgram(prog);
 
-    sigCountdown--;
-    if (sigCountdown <= 0 && sigState === 'idle') {
-      // BUY when price is low (arrow below text), SELL when price is high (arrow above text)
-      sigDir = price < RANGE_MID ? 1 : -1;
-      sigState = 'running';
-      sigCandle = 0;
-      sigEntry = price;
-      sigMoves = getSigMoves(sigDir);
-      candleSignal = sigDir === 1 ? 'buy' : 'sell';
-      showSignalPopup(candleSignal);
-    }
+const vao = gl.createVertexArray(); gl.bindVertexArray(vao);
+const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+const loc = gl.getAttribLocation(prog, 'aPos');
+gl.enableVertexAttribArray(loc);
+gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
-    if (sigState === 'running') {
-      if (sigCandle < sigMoves.length) {
-        forceMove = sigMoves[sigCandle];
-        sigCandle++;
-      }
-      if (sigCandle >= sigMoves.length) {
-        sigState = 'tp';
-      }
-    }
+gl.useProgram(prog);
+const uRes = gl.getUniformLocation(prog, 'uResolution');
+const uTimeU = gl.getUniformLocation(prog, 'uTime');
+const uMouseU = gl.getUniformLocation(prog, 'uMouse');
+const uClickU = gl.getUniformLocation(prog, 'uClick');
+const uHoverU = gl.getUniformLocation(prog, 'uHover');
 
-    active = planCandle(forceMove);
-    active.signal = candleSignal;
-    activeStart = 0;
-  }
+const st = { mouseRaw:[0.5,0.5], mouseSmooth:[0.5,0.5], hovered:false, hover:0, click:[0.5,0.5], clickT:-1 };
 
-  // Pre-fill
-  for (let i = 0; i < 35; i++) {
-    const p = planCandle(null);
-    candles.push({ open: p.open, close: p.targetClose, high: p.high, low: p.low, bullish: p.bullish });
-    price = p.targetClose;
-  }
-  startNewCandle();
+function resizeShader(){
+  const dpr = Math.min(window.devicePixelRatio||1, 2);
+  canvas.width = Math.floor(window.innerWidth * dpr);
+  canvas.height = Math.floor(window.innerHeight * dpr);
+}
+resizeShader();
+window.addEventListener('resize', resizeShader);
 
-  // ── Big screen popups ──
-  let popupEl = null;
-  function clearPopup() {
-    if (popupEl) { popupEl.remove(); popupEl = null; }
-  }
+const toUV = (e) => [
+  Math.max(0, Math.min(1, e.clientX / window.innerWidth)),
+  Math.max(0, Math.min(1, 1 - e.clientY / window.innerHeight))
+];
+window.addEventListener('pointermove', e => { st.mouseRaw = toUV(e); st.hovered = true; });
+document.addEventListener('pointerleave', () => { st.hovered = false; });
+window.addEventListener('pointerdown', e => { st.click = toUV(e); st.clickT = (performance.now() - shaderT0) * 0.001; });
 
-  function showSignalPopup(type) {
-    clearPopup();
-    const isBuy = type === 'buy';
-    const col = isBuy ? '#3b82f6' : '#ef4444';
-    // Position: BUY at bottom, SELL at top (away from hero text)
-    const vPos = isBuy ? 'bottom:8%' : 'top:5%';
-    const el = document.createElement('div');
-    el.style.cssText = `position:absolute;z-index:5;right:5%;${vPos};transform:translateX(20px);opacity:0;transition:all 0.4s cubic-bezier(0.2,0.8,0.2,1);pointer-events:none`;
-    el.innerHTML = `<div style="background:rgba(30,30,30,0.96);border-radius:14px;padding:0.55rem 0.7rem;display:flex;align-items:center;gap:0.6rem;backdrop-filter:blur(12px);box-shadow:0 8px 30px rgba(0,0,0,0.6);min-width:220px">
-      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#2AABEE,#229ED9);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.53 8.16l-1.8 8.49c-.14.6-.5.75-1.01.47l-2.8-2.06-1.35 1.3c-.15.15-.28.28-.57.28l.2-2.85 5.18-4.68c.22-.2-.05-.31-.35-.12L8.86 13.73l-2.75-.86c-.6-.19-.61-.6.12-.88l10.76-4.15c.5-.18.93.12.77.88z"/></svg>
-      </div>
-      <div>
-        <div style="font-size:0.6rem;color:#999;font-weight:500">Mantis FX VIP</div>
-        <div style="font-size:0.82rem;font-weight:700;color:${col}">${isBuy ? 'BUY' : 'SELL'} $XAUUSD HERE!</div>
-      </div>
-    </div>`;
-    heroEl.appendChild(el);
-    popupEl = el;
-    requestAnimationFrame(() => { el.style.opacity = '1'; el.style.transform = 'translateX(0)'; });
-    setTimeout(() => {
-      el.style.opacity = '0'; el.style.transform = 'translateX(20px)';
-      setTimeout(clearPopup, 500);
-    }, 4000);
-  }
+const shaderT0 = performance.now();
+function shaderFrame(){
+  const t = (performance.now() - shaderT0) * 0.001;
+  st.mouseSmooth[0] += (st.mouseRaw[0] - st.mouseSmooth[0]) * 0.12;
+  st.mouseSmooth[1] += (st.mouseRaw[1] - st.mouseSmooth[1]) * 0.12;
+  st.hover += ((st.hovered ? 1 : 0) - st.hover) * 0.08;
 
-  // TP popup appears at the candle position — stored and drawn on canvas instead
-  let tpPopupData = null;
-  function showTPPopup(profit) {
-    tpPopupData = { profit, frame: 0 };
-  }
-
-  function draw() {
-    const w = canvas.width, h = canvas.height;
-    ctx.clearRect(0, 0, w, h);
-
-    activeStart++;
-    const t = Math.min(activeStart / CANDLE_DUR, 1);
-    const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-
-    let currentClose;
-    if (active) {
-      currentClose = active.open + (active.targetClose - active.open) * eased;
-    }
-
-    // Candle complete
-    if (activeStart >= CANDLE_DUR && active) {
-      candles.push({ open: active.open, close: active.targetClose, high: active.high, low: active.low, bullish: active.bullish, signal: active.signal });
-      price = active.targetClose;
-      if (candles.length > 40) candles.shift();
-
-      if (sigState === 'tp') {
-        const profit = Math.abs(price - sigEntry).toFixed(0);
-        candles[candles.length-1].tp = true;
-        candles[candles.length-1].tpProfit = profit;
-        showTPPopup(profit);
-        sigState = 'idle';
-        sigCountdown = Math.floor(Math.random() * 5) + 7;
-      }
-      startNewCandle();
-    }
-
-    // Range: top near nav, bottom extends past CTA button
-    const padT = h * 0.02, padB = -h * 0.08, chartH = h - padT - padB;
-    function pY(p) { return padT + chartH - ((p - RANGE_LOW) / RANGE_SIZE) * chartH; }
-
-
-    const candleW = w / 38;
-    const totalW = candleW * 1.35;
-    const numVis = candles.length + 1;
-    const offX = w - numVis * totalW;
-
-    // Completed candles
-    for (let i = 0; i < candles.length; i++) {
-      const c = candles[i];
-      const x = offX + i * totalW;
-      const age = (candles.length - i) / candles.length;
-      const a = 0.04 + (1 - age) * 0.1;
-      const col = c.bullish ? `rgba(212,175,55,${a})` : `rgba(120,120,120,${a * 0.8})`;
-
-      const bodyTop = Math.min(pY(c.open), pY(c.close));
-      const bodyBot = Math.max(pY(c.open), pY(c.close));
-      const bodyH = Math.max(bodyBot - bodyTop, 2);
-
-      // Wick
-      ctx.strokeStyle = col; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.moveTo(x+candleW/2, pY(c.high)); ctx.lineTo(x+candleW/2, pY(c.low)); ctx.stroke();
-      // Body
-      ctx.fillStyle = col; ctx.fillRect(x, bodyTop, candleW, bodyH);
-
-      const mid = x + candleW / 2;
-
-      // ── SIGNAL: big arrow on chart ──
-      if (c.signal) {
-        const isBuy = c.signal === 'buy';
-        const col2 = isBuy ? '#3b82f6' : '#ef4444';
-        const ay = isBuy ? bodyBot + 6 : bodyTop - 6;
-
-        // Big arrow
-        ctx.fillStyle = col2;
-        ctx.beginPath();
-        if (isBuy) { ctx.moveTo(mid, ay-30); ctx.lineTo(mid-16, ay); ctx.lineTo(mid+16, ay); }
-        else { ctx.moveTo(mid, ay+30); ctx.lineTo(mid-16, ay); ctx.lineTo(mid+16, ay); }
-        ctx.fill();
-
-        // Arrow glow
-        ctx.shadowColor = col2; ctx.shadowBlur = 12;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        // Dashed entry line
-        ctx.setLineDash([4,4]); ctx.strokeStyle = col2+'22'; ctx.lineWidth = 0.8;
-        ctx.beginPath(); ctx.moveTo(x, pY(c.open)); ctx.lineTo(w, pY(c.open)); ctx.stroke();
-        ctx.setLineDash([]);
-      }
-
-      // ── TP HIT: profit label at candle ──
-      if (c.tp && c.tpProfit) {
-        const tpCx = mid;
-        const tpCy = c.bullish ? bTop - 18 : bBot + 18;
-
-        // Small rounded box
-        const txt = '+$' + c.tpProfit;
-        ctx.font = 'bold 13px -apple-system,sans-serif';
-        const tw = ctx.measureText(txt).width + 16;
-        const th = 22;
-        const tx = tpCx - tw / 2;
-        const ty = c.bullish ? tpCy - th - 2 : tpCy + 2;
-
-        ctx.fillStyle = 'rgba(34,197,94,0.15)';
-        ctx.beginPath(); ctx.roundRect(tx, ty, tw, th, 6); ctx.fill();
-        ctx.strokeStyle = 'rgba(34,197,94,0.4)'; ctx.lineWidth = 1; ctx.stroke();
-
-        ctx.fillStyle = '#22c55e';
-        ctx.textAlign = 'center';
-        ctx.fillText(txt, tpCx, ty + 15);
-        ctx.textAlign = 'left';
-
-        // Dashed TP line
-        ctx.setLineDash([4,3]); ctx.strokeStyle = 'rgba(34,197,94,0.15)'; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(offX, pY(c.close)); ctx.lineTo(x+candleW, pY(c.close)); ctx.stroke();
-        ctx.setLineDash([]);
-      }
-    }
-
-    // Active candle
-    if (active) {
-      const x = offX + candles.length * totalW;
-      const isBull = currentClose >= active.open;
-      const a = 0.16;
-      const col = isBull ? `rgba(212,175,55,${a})` : `rgba(120,120,120,${a})`;
-
-      const bodyTop = Math.min(pY(active.open), pY(currentClose));
-      const bodyBot = Math.max(pY(active.open), pY(currentClose));
-      const bodyH = Math.max(bodyBot - bodyTop, 2);
-
-      ctx.strokeStyle = col;
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(x + candleW/2, bodyTop - 2);
-      ctx.lineTo(x + candleW/2, bodyBot + 2);
-      ctx.stroke();
-
-      ctx.fillStyle = col;
-      ctx.fillRect(x, bodyTop, candleW, bodyH);
-
-      // Signal arrow on active candle
-      if (active.signal) {
-        const isBuy = active.signal === 'buy';
-        const col2 = isBuy ? '#3b82f6' : '#ef4444';
-        const mid2 = x + candleW / 2;
-        const ay = isBuy ? bodyBot + 6 : bodyTop - 6;
-
-        ctx.fillStyle = col2; ctx.beginPath();
-        if (isBuy) { ctx.moveTo(mid2,ay-30);ctx.lineTo(mid2-16,ay);ctx.lineTo(mid2+16,ay); }
-        else { ctx.moveTo(mid2,ay+30);ctx.lineTo(mid2-16,ay);ctx.lineTo(mid2+16,ay); }
-        ctx.shadowColor = col2; ctx.shadowBlur = 12;
-        ctx.fill(); ctx.shadowBlur = 0;
-      }
-
-      // Glow
-      const g = ctx.createRadialGradient(x+candleW/2, bodyTop+bodyH/2, 0, x+candleW/2, bodyTop+bodyH/2, candleW*3);
-      g.addColorStop(0, isBull ? 'rgba(212,175,55,0.04)' : 'rgba(120,120,120,0.02)');
-      g.addColorStop(1, 'transparent');
-      ctx.fillStyle = g;
-      ctx.fillRect(x-candleW*2, bodyTop-candleW*3, candleW*6, bodyH+candleW*6);
-    }
-
-    requestAnimationFrame(draw);
-  }
-  draw();
+  gl.viewport(0, 0, canvas.width, canvas.height);
+  gl.uniform2f(uRes, canvas.width, canvas.height);
+  gl.uniform1f(uTimeU, t);
+  gl.uniform2f(uMouseU, st.mouseSmooth[0], st.mouseSmooth[1]);
+  const age = st.clickT < 0 ? 1e6 : (t - st.clickT);
+  gl.uniform3f(uClickU, st.click[0], st.click[1], age);
+  gl.uniform1f(uHoverU, st.hover);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  requestAnimationFrame(shaderFrame);
+}
+shaderFrame();
 })();
-
-// ═══ FLOATING PARTICLES ═══
-(function(){
-  const container = document.getElementById('hero-particles');
-  function spawnParticle() {
-    const p = document.createElement('div');
-    p.className = 'hero-particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.animationDuration = (6 + Math.random() * 8) + 's';
-    p.style.animationDelay = Math.random() * 2 + 's';
-    p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
-    p.style.opacity = 0;
-    container.appendChild(p);
-    setTimeout(() => p.remove(), 16000);
-  }
-  setInterval(spawnParticle, 400);
-  for (let i = 0; i < 15; i++) setTimeout(spawnParticle, i * 200);
-})();
-
 
 // Intersection Observer for fade-in animations
 const observer = new IntersectionObserver((entries) => {
@@ -994,6 +785,24 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   }
   setTimeout(spawnNext, 800);
 })();
+</script>
+
+
+<!-- Weekly Results -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="results-data.js"></script>
+<script type="text/babel" src="results-editorial.jsx"></script>
+<script type="text/babel">
+const M = window.MANTIS;
+ReactDOM.createRoot(document.getElementById('results-root')).render(
+  React.createElement(EditorialLedger, {
+    weeks: M.WEEKS, winRatio: M.winRatio, cumulative: M.cumulative,
+    totalPips: M.totalPips, totalTrades: M.totalTrades, totalWins: M.totalWins,
+    totalLosses: M.totalLosses, overallWR: M.overallWR, simulate: M.simulate,
+  })
+);
 </script>
 
 </body>

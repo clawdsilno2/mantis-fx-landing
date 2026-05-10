@@ -497,7 +497,7 @@ function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
 // === AI CHAT (Manuel responds via VPS proxy) ===
 const CHAT_API = window.CHAT_API || 'http://46.151.34.7/chat';
 let userMsgCount = 0;
-const MAX_USER_MSGS = 5;
+const MAX_USER_MSGS = 3;
 let chatHistory = [];
 let chatEnabled = false;
 
@@ -574,16 +574,6 @@ async function sendUserMsg() {
   // Disable input while waiting
   input.disabled = true;
 
-  // Check if this is the last allowed message
-  const isLast = userMsgCount >= MAX_USER_MSGS;
-
-  if (isLast) {
-    chatHistory.push({
-      role: 'user',
-      content: '[SYSTEM: This is the user\'s last message. You MUST end your response with a strong call-to-action inviting them to join the Telegram community. Be enthusiastic and direct. End with something like "Join us here:" followed by the link. The Telegram link is: https://t.me/fxmantis]'
-    });
-  }
-
   try {
     // Show typing indicator
     const typingDiv = document.createElement('div');
@@ -610,14 +600,13 @@ async function sendUserMsg() {
     await wait(500);
     await addMessage('Manuel', reply, '#00c853', true, 0);
 
-    if (isLast) {
-      // Disable chat after final message
-      input.disabled = true;
-      input.placeholder = '';
-      document.getElementById('sendBtn').style.display = 'none';
+    if (userMsgCount === 1) {
+      // After 1st question: follow up with channel invite
+      await wait(1500);
+      await addMessage('Manuel', `You can join my free channel if you want and check if you like it! Click the button below to get your access 👇🏼`, '#00c853', true, 0);
 
-      // Send the invite card one more time
-      await wait(2000);
+      await wait(1000);
+      // Invite card
       const wrap = document.createElement('div');
       wrap.className = 'tg-msg-wrap';
       const avatar = document.createElement('div');
@@ -628,7 +617,7 @@ async function sendUserMsg() {
       msg.className = 'tg-msg incoming';
       const inviteCard = document.createElement('div');
       inviteCard.className = 'tg-invite-card';
-      inviteCard.innerHTML = `<a href="https://t.me/fxmantis" target="_blank"><div class="tg-invite-label">Invitation</div><div class="tg-invite-title">Join Mantis FX Private Community</div><div class="tg-invite-sub">Tap here to join — free access</div><div class="tg-invite-arrow">&#x279C;</div></a>`;
+      inviteCard.innerHTML = `<a href="https://t.me/fxmantis" target="_blank"><div class="tg-invite-label">Free Channel</div><div class="tg-invite-title">Join Mantis FX</div><div class="tg-invite-sub">Tap here to join</div><div class="tg-invite-arrow">&#x279C;</div></a>`;
       msg.appendChild(inviteCard);
       const time = document.createElement('span');
       time.className = 'time';
@@ -637,14 +626,51 @@ async function sendUserMsg() {
       wrap.appendChild(msg);
       document.getElementById('messages').appendChild(wrap);
       scrollToBottom();
-    } else {
+
       input.disabled = false;
       input.focus();
+
+    } else if (userMsgCount === 2) {
+      // After 2nd question: normal response, keep chat open
+      input.disabled = false;
+      input.focus();
+
+    } else if (userMsgCount >= 3) {
+      // After 3rd question: close chat, redirect to DM
+      await wait(1500);
+      await addMessage('Manuel', `Let's continue our chat on Telegram. I'll be happy to answer all your questions 🙏🏼❤️`, '#00c853', true, 0);
+
+      await wait(1000);
+      // DM button
+      const wrap = document.createElement('div');
+      wrap.className = 'tg-msg-wrap';
+      const avatar = document.createElement('div');
+      avatar.className = 'msg-avatar';
+      avatar.style.background = 'url(manuel.png) center/cover';
+      wrap.appendChild(avatar);
+      const msg = document.createElement('div');
+      msg.className = 'tg-msg incoming';
+      const dmCard = document.createElement('div');
+      dmCard.className = 'tg-invite-card';
+      dmCard.innerHTML = `<a href="#" onclick="return false;"><div class="tg-invite-label">Private Message</div><div class="tg-invite-title">Chat with Manuel</div><div class="tg-invite-sub">Tap to send a message</div><div class="tg-invite-arrow">&#x279C;</div></a>`;
+      msg.appendChild(dmCard);
+      const time = document.createElement('span');
+      time.className = 'time';
+      time.textContent = getTime();
+      msg.appendChild(time);
+      wrap.appendChild(msg);
+      document.getElementById('messages').appendChild(wrap);
+      scrollToBottom();
+
+      // Disable chat
+      input.disabled = true;
+      input.placeholder = '';
+      document.getElementById('sendBtn').style.display = 'none';
     }
   } catch (e) {
     document.getElementById('typing')?.remove();
-    await addMessage('Manuel', 'Come check out the community, I share everything there 💪 https://t.me/fxmantis', '#00c853', true, 0);
-    input.disabled = true;
+    await addMessage('Manuel', 'Come check out the community, I share everything there 💪', '#00c853', true, 0);
+    input.disabled = false;
   }
 }
 </script>

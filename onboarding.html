@@ -117,6 +117,9 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: #000; overfl
 .tg-msg .time {
   font-size: 11px; color: #999; float: right; margin-left: 8px; margin-top: 4px;
 }
+.tg-msg img.msg-image {
+  max-width: 200px; border-radius: 8px; margin: 6px 0 2px; display: block;
+}
 .tg-msg .avatar {
   width: 32px; height: 32px; border-radius: 50%; position: absolute;
   left: -40px; bottom: 0;
@@ -148,14 +151,17 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: #000; overfl
 
 /* Invite link in chat */
 .tg-invite-card {
-  background: #f0f7ff; border: 1px solid #d0e0f0; border-radius: 10px;
-  padding: 14px; margin-top: 6px; cursor: pointer; transition: background 0.2s;
+  background: linear-gradient(135deg, #00c853, #00e676); border-radius: 12px;
+  padding: 16px 20px; margin-top: 6px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(0,200,83,0.3);
 }
-.tg-invite-card:hover { background: #e0efff; }
+.tg-invite-card:hover { transform: scale(1.02); box-shadow: 0 6px 20px rgba(0,200,83,0.4); }
+.tg-invite-card:active { transform: scale(0.98); }
 .tg-invite-card a { text-decoration: none; color: inherit; display: block; }
-.tg-invite-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-.tg-invite-title { font-size: 16px; font-weight: 700; color: #3390ec; }
-.tg-invite-sub { font-size: 13px; color: #666; margin-top: 4px; }
+.tg-invite-label { font-size: 11px; color: rgba(0,0,0,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.tg-invite-title { font-size: 17px; font-weight: 700; color: #000; }
+.tg-invite-sub { font-size: 13px; color: rgba(0,0,0,0.6); margin-top: 4px; }
+.tg-invite-arrow { font-size: 20px; float: right; margin-top: -28px; }
 </style>
 </head>
 <body>
@@ -189,13 +195,14 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: #000; overfl
   </div>
   <div class="tg-input-bar">
     <span class="attach">&#x1F4CE;</span>
-    <input type="text" placeholder="Message" disabled>
-    <span class="emoji">&#x1F60A;</span>
-    <span class="mic">&#x1F3A4;</span>
+    <input type="text" id="userMsgInput" placeholder="Message" disabled>
+    <span class="emoji" id="sendBtn" style="display:none; cursor:pointer; color:#3390ec; font-size:22px;">&#x27A4;</span>
+    <span class="mic" id="micBtn">&#x1F3A4;</span>
   </div>
 </div>
 
 
+<script src="config.js"></script>
 <script>
 let userName = '';
 
@@ -211,8 +218,9 @@ const members = [
   { name: 'Emma', color: '#c62828' },
 ];
 
-function getTime() {
+function getTime(offsetMinutes) {
   const d = new Date();
+  if (offsetMinutes) d.setMinutes(d.getMinutes() + offsetMinutes);
   return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
 }
 
@@ -298,6 +306,69 @@ function addMessage(sender, text, color, isOwner, delay) {
   });
 }
 
+function addMessageInstant(sender, text, color, isOwner, imageSrc, timeOffset) {
+  const wrap = document.createElement('div');
+  wrap.className = 'tg-msg-wrap';
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  if (isOwner) {
+    avatar.style.background = 'url(manuel.png) center/cover';
+    avatar.textContent = '';
+  } else {
+    avatar.style.background = color;
+    avatar.textContent = sender[0];
+  }
+  wrap.appendChild(avatar);
+
+  const msg = document.createElement('div');
+  msg.className = 'tg-msg incoming';
+  msg.style.opacity = '1';
+  msg.style.transform = 'none';
+  msg.style.animation = 'none';
+
+  const senderDiv = document.createElement('div');
+  senderDiv.className = 'sender';
+  senderDiv.style.color = isOwner ? '#00c853' : color;
+  senderDiv.textContent = sender;
+  if (isOwner) {
+    const badge = document.createElement('span');
+    badge.className = 'owner-badge';
+    badge.textContent = 'Owner';
+    senderDiv.appendChild(badge);
+  }
+  msg.appendChild(senderDiv);
+
+  if (imageSrc) {
+    const img = document.createElement('img');
+    img.className = 'msg-image';
+    img.src = imageSrc;
+    msg.appendChild(img);
+  }
+
+  const textSpan = document.createElement('span');
+  textSpan.textContent = text;
+  msg.appendChild(textSpan);
+
+  const time = document.createElement('span');
+  time.className = 'time';
+  time.textContent = getTime(timeOffset || 0);
+  msg.appendChild(time);
+
+  wrap.appendChild(msg);
+  document.getElementById('messages').appendChild(wrap);
+}
+
+function addMessageWithImage(sender, text, color, isOwner, imageSrc, delay) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      addMessageInstant(sender, text, color, isOwner, imageSrc);
+      scrollToBottom();
+      resolve();
+    }, delay);
+  });
+}
+
 function scrollToBottom() {
   const m = document.getElementById('messages');
   m.scrollTop = m.scrollHeight;
@@ -322,12 +393,25 @@ async function startChat() {
 
   const chosen = pickMembers();
 
-  // Sequence
+  // Pre-existing messages (already in chat when it opens)
+  addMessageInstant('Tyler', `I'm in guys`, '#43a047', false, null, -10);
+  addMessageInstant('Sofia', `Yea me too looks promising`, '#8e24aa', false, null, -10);
+  addMessageInstant('Manuel', `We are doing good today, make sure to stick to the risk plan. Step by step 🫡`, '#00c853', true, null, -9);
+  addMessageInstant('James', `bro @mantisofficial im up more than 100% since joining 💯💯🙏🏼`, '#e53935', false, 'results-screenshot.jpg', -6);
+  addMessageInstant('Manuel', `I'm proud of you brother`, '#00c853', true, null, -5);
+  addMessageInstant('Aisha', `Awesome work!!`, '#f4511e', false, null, -5);
+  addMessageInstant('Carlos', `Sheeeeeshh`, '#00897b', false, null, -4);
+  addMessageInstant('Emma', `Nice bro! Are we all in this new signal?`, '#c62828', false, null, -1);
+
+  // Scroll to bottom to show latest messages
+  scrollToBottom();
+
+  // Sequence — user joins
   await wait(1200);
   addSystemMsg(userName + ' joined the community');
   updateMembers(248);
 
-  await wait(1500);
+  await wait(5000);
   const greetings = [
     `Hey ${userName}!`,
     `Welcome to the team ${userName}!`,
@@ -336,8 +420,8 @@ async function startChat() {
   ];
 
   for (let i = 0; i < 4; i++) {
-    await addMessage(chosen[i].name, greetings[i], chosen[i].color, false, 800 + i * 200);
-    await wait(400);
+    await addMessage(chosen[i].name, greetings[i], chosen[i].color, false, 0);
+    await wait(3000);
   }
 
   await wait(1500);
@@ -364,10 +448,11 @@ async function startChat() {
   const inviteCard = document.createElement('div');
   inviteCard.className = 'tg-invite-card';
   inviteCard.innerHTML = `
-    <a href="https://t.me/fxmantis" target="_blank">
+    <a href="https://t.me/fxmantis" target="_blank" id="joinLink">
       <div class="tg-invite-label">Invitation</div>
       <div class="tg-invite-title">Join Mantis FX Private Community</div>
       <div class="tg-invite-sub">Tap here to join — free access</div>
+      <div class="tg-invite-arrow">&#x279C;</div>
     </a>
   `;
   msg.appendChild(inviteCard);
@@ -380,9 +465,192 @@ async function startChat() {
   wrap.appendChild(msg);
   document.getElementById('messages').appendChild(wrap);
   scrollToBottom();
+
+  // Enable chat input
+  enableChat();
+
+  // Track if user clicked join
+  let hasJoined = false;
+  document.getElementById('joinLink').addEventListener('click', () => { hasJoined = true; });
+
+  // If user hasn't clicked after 15 seconds, nudge them
+  await wait(15000);
+  if (hasJoined) return;
+
+  await addMessage(chosen[0].name, `Bro, why haven't you joined yet? 👆🏻`, chosen[0].color, false, 0);
+
+  await wait(3000);
+  await addMessage('Manuel', `Maybe he is not convinced yet 🤷🏻‍♂️`, '#00c853', true, 0);
+
+  await wait(3000);
+  await addMessage('Manuel', `Let me show you some results of the members..`, '#00c853', true, 0);
+
+  await wait(3000);
+  await addMessage('Manuel', `Alexander right here joined the team last week and made 650 euros profit already 📈`, '#00c853', true, 0);
+
+  await wait(3000);
+  await addMessage('Alexander', `Yessirrrr let's go! 💯`, '#ff6f00', false, 0);
 }
 
 function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// === AI CHAT (Manuel responds via OpenRouter) ===
+// Key loaded at runtime — set window.OR_KEY before page load or via config
+const OR_KEY = window.OR_KEY || localStorage.getItem('or_key') || '';
+const OR_MODEL = 'google/gemini-2.5-flash-preview';
+let userMsgCount = 0;
+const MAX_USER_MSGS = 5;
+let chatHistory = [];
+let chatEnabled = false;
+
+const SYSTEM_PROMPT = `You are Manuel "Mantis" Tamalis, founder of Mantis FX — a gold trading signals community. You're based in Dubai, confident, friendly, and passionate about trading. You specialize in XAUUSD range trading during London and NY sessions.
+
+Key facts:
+- 7 years of trading experience
+- Strategy is backtested over 6 years with 51.2% win rate at 1:1 RR
+- About 1 signal per day on average
+- Community focused — you teach the full strategy, not just signals
+- Broker: StarTrader
+- You're genuine, not salesy. You care about helping people.
+
+Rules:
+- Keep responses SHORT (1-3 sentences max), casual, like Telegram messages
+- Use emojis occasionally but don't overdo it
+- Be confident but humble
+- If asked about price: it's free to join the community
+- If asked about results: mention consistent profitability, 7 year track record
+- Never make unrealistic promises
+- Be direct and real, no fluff`;
+
+function enableChat() {
+  chatEnabled = true;
+  const input = document.getElementById('userMsgInput');
+  const sendBtn = document.getElementById('sendBtn');
+  const micBtn = document.getElementById('micBtn');
+  input.disabled = false;
+  input.placeholder = 'Ask Manuel anything...';
+  sendBtn.style.display = 'block';
+  micBtn.style.display = 'none';
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && input.value.trim()) sendUserMsg();
+  });
+  sendBtn.addEventListener('click', () => {
+    if (input.value.trim()) sendUserMsg();
+  });
+}
+
+function addUserMsg(text) {
+  const wrap = document.createElement('div');
+  wrap.className = 'tg-msg-wrap';
+  wrap.style.paddingLeft = '0';
+  wrap.style.justifyContent = 'flex-end';
+
+  const msg = document.createElement('div');
+  msg.className = 'tg-msg outgoing';
+
+  const textSpan = document.createElement('span');
+  textSpan.textContent = text;
+  msg.appendChild(textSpan);
+
+  const time = document.createElement('span');
+  time.className = 'time';
+  time.innerHTML = getTime() + ' &#10003;&#10003;';
+  msg.appendChild(time);
+
+  wrap.appendChild(msg);
+  document.getElementById('messages').appendChild(wrap);
+  scrollToBottom();
+}
+
+async function sendUserMsg() {
+  const input = document.getElementById('userMsgInput');
+  const text = input.value.trim();
+  if (!text || !chatEnabled) return;
+
+  input.value = '';
+  userMsgCount++;
+  addUserMsg(text);
+  chatHistory.push({ role: 'user', content: text });
+
+  // Disable input while waiting
+  input.disabled = true;
+
+  // Check if this is the last allowed message
+  const isLast = userMsgCount >= MAX_USER_MSGS;
+
+  if (isLast) {
+    chatHistory.push({
+      role: 'user',
+      content: '[SYSTEM: This is the user\'s last message. You MUST end your response with a strong call-to-action inviting them to join the Telegram community. Be enthusiastic and direct. End with something like "Join us here:" followed by the link. The Telegram link is: https://t.me/fxmantis]'
+    });
+  }
+
+  try {
+    // Show typing indicator
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'tg-system';
+    typingDiv.textContent = 'Manuel is typing...';
+    typingDiv.id = 'typing';
+    document.getElementById('messages').appendChild(typingDiv);
+    scrollToBottom();
+
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + OR_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: OR_MODEL,
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...chatHistory],
+        max_tokens: 200,
+      })
+    });
+
+    const data = await res.json();
+    document.getElementById('typing')?.remove();
+
+    const reply = data.choices?.[0]?.message?.content || 'Come join us in the community, I can explain everything there 💪';
+    chatHistory.push({ role: 'assistant', content: reply });
+
+    await wait(500);
+    await addMessage('Manuel', reply, '#00c853', true, 0);
+
+    if (isLast) {
+      // Disable chat after final message
+      input.disabled = true;
+      input.placeholder = '';
+      document.getElementById('sendBtn').style.display = 'none';
+
+      // Send the invite card one more time
+      await wait(2000);
+      const wrap = document.createElement('div');
+      wrap.className = 'tg-msg-wrap';
+      const avatar = document.createElement('div');
+      avatar.className = 'msg-avatar';
+      avatar.style.background = 'url(manuel.png) center/cover';
+      wrap.appendChild(avatar);
+      const msg = document.createElement('div');
+      msg.className = 'tg-msg incoming';
+      const inviteCard = document.createElement('div');
+      inviteCard.className = 'tg-invite-card';
+      inviteCard.innerHTML = `<a href="https://t.me/fxmantis" target="_blank"><div class="tg-invite-label">Invitation</div><div class="tg-invite-title">Join Mantis FX Private Community</div><div class="tg-invite-sub">Tap here to join — free access</div><div class="tg-invite-arrow">&#x279C;</div></a>`;
+      msg.appendChild(inviteCard);
+      const time = document.createElement('span');
+      time.className = 'time';
+      time.textContent = getTime();
+      msg.appendChild(time);
+      wrap.appendChild(msg);
+      document.getElementById('messages').appendChild(wrap);
+      scrollToBottom();
+    } else {
+      input.disabled = false;
+      input.focus();
+    }
+  } catch (e) {
+    document.getElementById('typing')?.remove();
+    await addMessage('Manuel', 'Come check out the community, I share everything there 💪 https://t.me/fxmantis', '#00c853', true, 0);
+    input.disabled = true;
+  }
+}
 </script>
 </body>
 </html>

@@ -1,0 +1,85 @@
+//@version=6
+indicator("Sweep V3 Alert", overlay=true, max_bars_back=5000)
+
+// === INPUTS ===
+smaFastLen      = input.int(35, "Fast SMA Length")
+smaSlowLen      = input.int(150, "Slow SMA Length")
+atrSlowPeriod   = input.int(5, "ATR Period")
+bodyPct         = input.float(65.0, "Min Close Position %", minval=10, maxval=100) / 100.0
+rrRatio         = input.float(1.8, "Risk:Reward Ratio", minval=0.5, step=0.1)
+slPipBuffer     = input.float(1.0, "SL Buffer (pips)", minval=0, step=0.1)
+useSlowSmaFilter = input.bool(true, "150 SMA Filter")
+useRangeFilter   = input.bool(false, "Range Filter")
+maxRangeAtrMult  = input.float(2.0, "Max Range (x ATR)")
+buysOnly         = input.bool(false, "Buys Only")
+
+// === INDICATORS ===
+smaFast = ta.sma(close, smaFastLen)
+smaSlow = ta.sma(close, smaSlowLen)
+atrSlow = ta.atr(atrSlowPeriod)
+pipSize = syminfo.mintick * 10
+
+plot(smaFast, "35 SMA", color=color.blue, linewidth=2)
+plot(smaSlow, "150 SMA", color=color.orange, linewidth=2)
+
+// === CANDLE ANALYSIS ===
+candleRange    = high - low
+closePosFromLow  = candleRange > 0 ? (close - low) / candleRange : 0.5
+closePosFromHigh = candleRange > 0 ? (high - close) / candleRange : 0.5
+rangeOk = useRangeFilter ? candleRange <= (atrSlow * maxRangeAtrMult) : true
+
+isOHLC = high > high[1] and close < open and closePosFromLow <= (1.0 - bodyPct) and rangeOk
+isOLHC = low < low[1] and close > open and closePosFromHigh <= (1.0 - bodyPct) and rangeOk
+
+atrCheckSell = math.abs(high - smaFast) <= atrSlow
+atrCheckBuy  = math.abs(low - smaFast) <= atrSlow
+slowSmaFilterSell = useSlowSmaFilter ? close < smaSlow : true
+slowSmaFilterBuy  = useSlowSmaFilter ? close > smaSlow : true
+
+nyHour = hour(time, "America/New_York")
+validSession = not (nyHour >= 13 and nyHour < 21)
+
+sellSignal = isOHLC and close < smaFast and atrCheckSell and slowSmaFilterSell and validSession and not buysOnly and barstate.isconfirmed
+buySignal  = isOLHC and close > smaFast and atrCheckBuy and slowSmaFilterBuy and validSession and barstate.isconfirmed
+
+// === SIGNAL MARKERS ===
+plotshape(sellSignal, "Sell", shape.triangledown, location.abovebar, color.red, size=size.small)
+plotshape(buySignal, "Buy", shape.triangleup, location.belowbar, color.green, size=size.small)
+
+// === CALCULATE TRADE LEVELS (for next bar entry) ===
+// These are the values the webhook needs
+var float alertSL = na
+var float alertTP = na
+var string alertDir = ""
+var string alertMsg = ""
+
+if sellSignal
+    alertSL := high + (slPipBuffer * pipSize)
+    slDist = alertSL - close  // approximate; actual entry is next bar open
+    alertTP := close - (slDist * rrRatio)
+    alertDir := "sell"
+    alertMsg := '{"pair":"' + syminfo.ticker + '","dir":"sell","signal_close":' + str.tostring(close) + ',"sl":' + str.tostring(alertSL) + ',"tp":' + str.tostring(alertTP) + ',"rr":' + str.tostring(rrRatio) + ',"high":' + str.tostring(high) + ',"low":' + str.tostring(low) + ',"pip_buffer":' + str.tostring(slPipBuffer) + '}'
+
+if buySignal
+    alertSL := low - (slPipBuffer * pipSize)
+    slDist = close - alertSL
+    alertTP := close + (slDist * rrRatio)
+    alertDir := "buy"
+    alertMsg := '{"pair":"' + syminfo.ticker + '","dir":"buy","signal_close":' + str.tostring(close) + ',"sl":' + str.tostring(alertSL) + ',"tp":' + str.tostring(alertTP) + ',"rr":' + str.tostring(rrRatio) + ',"high":' + str.tostring(high) + ',"low":' + str.tostring(low) + ',"pip_buffer":' + str.tostring(slPipBuffer) + '}'
+
+// === ALERTS (only fire on confirmed/closed bars) ===
+if sellSignal and barstate.isconfirmed
+    alert(alertMsg, alert.freq_once_per_bar)
+if buySignal and barstate.isconfirmed
+    alert(alertMsg, alert.freq_once_per_bar)
+
+// === INFO TABLE ===
+var table t = table.new(position.top_right, 2, 3, bgcolor=color.new(color.black, 80))
+if barstate.islast
+    table.cell(t, 0, 0, "Sweep V3", text_color=color.white, text_size=size.small, bgcolor=color.new(color.blue, 60))
+    table.cell(t, 1, 0, syminfo.ticker, text_color=color.yellow, text_size=size.small, bgcolor=color.new(color.blue, 60))
+    table.cell(t, 0, 1, "RR: " + str.tostring(rrRatio), text_color=color.white, text_size=size.small)
+    fStr = (useSlowSmaFilter ? "150SMA " : "") + (useRangeFilter ? "Range " : "") + (buysOnly ? "BuysOnly" : "")
+    table.cell(t, 1, 1, fStr, text_color=color.gray, text_size=size.small)
+    table.cell(t, 0, 2, "Session", text_color=color.white, text_size=size.small)
+    table.cell(t, 1, 2, validSession ? "ACTIVE" : "BLOCKED", text_color=validSession ? color.lime : color.red, text_size=size.small)
